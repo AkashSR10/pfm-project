@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.adminController">
+   <children>
+      <JFXButton layoutX="548.0" layoutY="472.0" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #651fff;" text="Log in" textFill="WHITE" />
+      <JFXPasswordField layoutX="561.0" layoutY="400.0" promptText="Password" unFocusColor="#651fff" />
+      <JFXTextField focusColor="#651fff" layoutX="561.0" layoutY="359.0" promptText="Username" style="-fx-background-color: 000000;" unFocusColor="#651fffad" />
+      <Text fill="#212121" layoutX="535.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER LOGIN">
+         <font>
+            <Font size="30.0" />
+         </font></Text>
+      <JFXButton layoutX="548.0" layoutY="537.0" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #651fff;" text="Sign up" textFill="WHITE" />
+      <Text fill="#212121" layoutX="626.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-or-">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

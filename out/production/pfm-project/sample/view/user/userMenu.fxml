@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.adminController">
+    <children>
+      <VBox layoutY="-8.0" prefHeight="815.0" prefWidth="350.0" style="-fx-background-color: #424242;">
+         <children>
+            <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Roulette" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="1.0" top="1.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Search" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="1.0" top="1.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="My List" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="1.0" top="1.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Recommendations (beta)" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="1.0" top="1.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Log out" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="1.0" top="1.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

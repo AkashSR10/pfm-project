@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.Database.Connect;
 
 public class Main extends Application {
 
@@ -14,6 +15,8 @@ public class Main extends Application {
         primaryStage.setTitle("pfm-project");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        Connect database = new Connect();
+        database.connect();
     }
 
 
@@ -26,4 +29,6 @@ public class Main extends Application {
     1. Install IntelliJ
     2. Add Jfoenix 9.0 to Library
     3. Add sqlite-jdbc-3.30.1.jar to Library
+    4. Check Inheritance?
+
  */

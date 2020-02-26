@@ -39,8 +39,6 @@ public class pickController {
 
         pickGuestButton.setOnAction(event -> {
             System.out.println("Click!");
-            Connect connect = new Connect();
-            connect.connect();
 
 
         });

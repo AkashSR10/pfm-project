@@ -15,7 +15,6 @@ public class Connect {
             String url = "jdbc:sqlite:db/pfm";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
-
             System.out.println("Connection to SQLite has been established.");
 
         } catch (SQLException e) {

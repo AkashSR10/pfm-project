@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.adminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SignUpController">
     <children>
         <Text fill="#212121" layoutX="508.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER SIGN UP">
             <font>
@@ -19,13 +19,13 @@
       <VBox layoutX="318.0" layoutY="208.0" prefHeight="200.0" prefWidth="100.0" />
       <Pane layoutX="508.0" layoutY="289.0" prefHeight="200.0" prefWidth="264.0">
          <children>
-            <JFXTextField focusColor="#651fff" layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="190.0" promptText="Username" style="-fx-background-color: 000000;" text="Email" unFocusColor="#651fffad" />
-              <JFXTextField focusColor="#651fff" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="83.0" promptText="First Name" style="-fx-background-color: 000000;" unFocusColor="#651fffad" />
-            <JFXTextField focusColor="#651fff" layoutX="117.0" layoutY="14.0" prefHeight="26.0" prefWidth="83.0" promptText="Last Name" style="-fx-background-color: 000000;" unFocusColor="#651fffad" />
-              <JFXPasswordField layoutX="14.0" layoutY="87.0" prefHeight="26.0" prefWidth="190.0" promptText="Password" unFocusColor="#651fff" />
-            <JFXCheckBox layoutX="14.0" layoutY="131.0" selected="true" text="Male" />
-            <JFXCheckBox layoutX="117.0" layoutY="131.0" prefHeight="18.0" prefWidth="94.0" text="Female" />
-              <JFXButton layoutX="12.0" layoutY="164.0" prefHeight="30.0" prefWidth="197.0" style="-fx-background-color: #651fff;" text="Sign up" textFill="WHITE" />
+<!--            <JFXTextField fx:id="email" focusColor="#651fff" layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="190.0" promptText="Email" style="-fx-background-color: 000000;" unFocusColor="#651fffad" />-->
+              <JFXTextField fx:id="firstNameField" focusColor="#651fff" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="83.0" promptText="First Name" style="-fx-background-color: 000000;" unFocusColor="#651fffad" />
+            <JFXTextField fx:id="lastNameField" focusColor="#651fff" layoutX="117.0" layoutY="14.0" prefHeight="26.0" prefWidth="83.0" promptText="Last Name" style="-fx-background-color: 000000;" unFocusColor="#651fffad" />
+              <JFXPasswordField fx:id="passwordField" layoutX="14.0" layoutY="87.0" prefHeight="26.0" prefWidth="190.0" promptText="Password" unFocusColor="#651fff" />
+            <JFXCheckBox fx:id="maleBox" layoutX="14.0" layoutY="131.0" selected="true" text="Male" />
+            <JFXCheckBox fx:id="femaleBox" layoutX="117.0" layoutY="131.0" prefHeight="18.0" prefWidth="94.0" text="Female" />
+              <JFXButton fx:id="signUpButton" layoutX="12.0" layoutY="164.0" prefHeight="30.0" prefWidth="197.0" style="-fx-background-color: #651fff;" text="Sign up" textFill="WHITE" />
          </children>
       </Pane>
     </children>

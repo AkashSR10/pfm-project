@@ -8,25 +8,29 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class sceneController {
+
     // Set path to pAdmin
     public void pAdmin(){
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/view/pick/pickAdmin.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
+        setStage("/sample/view/pick/pickAdmin.fxml");
     }
 
     // Set  path to pLogin
     public void pLogin(){
+        setStage("/sample/view/pick/pickLogin.fxml");
+    }
+
+    // Set  path to signUp
+    public void pSignUp(){
+        setStage("/sample/view/pick/pickSignup.fxml");
+    }
+    // Set  path to signUp
+    public void pMemberMenu(){
+        setStage("/sample/view/member/memberMenu.fxml");
+    }
+
+    public void setStage(String resource) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/view/pick/pickLogin.fxml"));
+        loader.setLocation(getClass().getResource(resource));
         try {
             loader.load();
         } catch (IOException e) {
@@ -37,7 +41,6 @@ public class sceneController {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
-
 
 
 }

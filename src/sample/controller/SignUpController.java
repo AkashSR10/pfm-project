@@ -80,7 +80,8 @@ public class SignUpController {
         user.lastName = lastNameField.getText().trim();
         user.password = passwordField.getText().trim();
         user.gender = maleBox.isSelected() ? 0 : 1; //if the male box is selected the value is 0, if not than the value is 1.
-        user.gender = femaleBox.isSelected() ? 1 : 0;
+        user.gender = femaleBox.isSelected() ? 1 : 0; //if the female box is selected the value is 1, if not than the value is 0.
+        //add admin
 
 
         String saveMemberInfo = "INSERT INTO Member (Email, Password, First_name, Last_name, 'Gender(0=male/1=female)') VALUES (?,?,?,?,?)"; //Add gender and admin when done

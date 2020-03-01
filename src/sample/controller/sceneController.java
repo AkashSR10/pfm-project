@@ -28,6 +28,10 @@ public class sceneController {
         setStage("/sample/view/member/memberMenu.fxml");
     }
 
+    public void padminMenu(){
+        setStage("/sample/view/admin/adminMenu.fxml");
+    }
+
     public void setStage(String resource) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(resource));

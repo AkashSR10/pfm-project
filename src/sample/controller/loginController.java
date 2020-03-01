@@ -6,14 +6,20 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.net.URL;
 import java.sql.*;
-import java.util.Map;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.Executor;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Database.Connect;
 import sample.Database.DatabaseHandler;
+import sample.model.Movie;
+
+
 
 
 public class loginController {
@@ -44,25 +50,26 @@ public class loginController {
     private JFXButton signupButton;
 
     @FXML
+    private TableView movieView;
+
+
+    @FXML
     void initialize() {
         memberLoginButton.setOnAction(event -> {
             if (login()) {
                 sceneController sc1 = new sceneController();
                 sc1.pMemberMenu();
-
             } else {
                 System.out.print(("Error login in user")); // TODO add message for the user
             }
-
         });
 
         signUpButton.setOnAction(event -> {
-
             sceneController sc2 = new sceneController();
             sc2.pSignUp();
-
         });
     }
+
 
     private boolean login() {
 

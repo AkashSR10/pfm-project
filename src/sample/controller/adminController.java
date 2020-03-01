@@ -38,7 +38,8 @@ public class adminController {
 
         adminLoginButton.setOnAction((event -> {
             if (loginAdmin()) {
-                // TODO add landing page
+                sceneController sc1 = new sceneController();
+                sc1.padminMenu();
             } else {
                 System.out.print(("Error login in user")); // TODO add message for the user
             }

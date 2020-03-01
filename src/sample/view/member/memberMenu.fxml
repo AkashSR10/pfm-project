@@ -5,7 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.adminController">
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MemberMenuController">
     <children>
       <VBox layoutY="-8.0" prefHeight="815.0" prefWidth="350.0" style="-fx-background-color: #424242;">
          <children>
@@ -35,6 +39,44 @@
                </VBox.margin>
             </JFXButton>
          </children>
+      </VBox>
+      <VBox>
+       <TableView fx:id="movieView" >
+          <columns>
+             <TableColumn text="primaryTitle">
+                 <cellValueFactory><PropertyValueFactory property="primaryTitle" />
+                 </cellValueFactory>
+             </TableColumn>
+              <TableColumn text="titleType">
+                  <cellValueFactory><PropertyValueFactory property="titleType" />
+                  </cellValueFactory>
+              </TableColumn>
+             <TableColumn text="averageRating">
+                 <cellValueFactory><PropertyValueFactory property="averageRating" />
+                 </cellValueFactory>
+             </TableColumn>
+              <TableColumn text="runtimeminutes">
+                  <cellValueFactory><PropertyValueFactory property="runtimeMinutes" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn text="year">
+                  <cellValueFactory><PropertyValueFactory property="year" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn text="genre1">
+                  <cellValueFactory><PropertyValueFactory property="genre1" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn text="genre2">
+                  <cellValueFactory><PropertyValueFactory property="genre2" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn text="genre3">
+                  <cellValueFactory><PropertyValueFactory property="genre3" />
+                  </cellValueFactory>
+              </TableColumn>
+          </columns>
+       </TableView>
       </VBox>
     </children>
 </AnchorPane>

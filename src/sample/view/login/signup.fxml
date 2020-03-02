@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.login.signupController">
+    <children>
+        <Text fill="#212121" layoutX="516.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER SIGN UP">
+            <font>
+                <Font size="30.0" />
+            </font></Text>
+      <Pane layoutX="508.0" layoutY="289.0" prefHeight="200.0" prefWidth="264.0">
+         <children>
+            <TextField fx:id="firstnameText" layoutX="12.0" layoutY="14.0" prefHeight="26.0" prefWidth="91.0" promptText="First Name" />
+            <TextField fx:id="lastnameText" layoutX="117.0" layoutY="14.0" prefHeight="26.0" prefWidth="91.0" promptText="Last Name" />
+            <TextField fx:id="emailText" layoutX="12.0" layoutY="49.0" prefHeight="26.0" prefWidth="190.0" promptText="Email" />
+            <PasswordField fx:id="passwordText" layoutX="12.0" layoutY="87.0" prefHeight="26.0" prefWidth="190.0" promptText="Password" />
+            <Button fx:id="signupButton" layoutX="12.0" layoutY="162.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" text="Sign up" />
+            <RadioButton fx:id="maleRadio" layoutX="17.0" layoutY="129.0" mnemonicParsing="false" text="Male">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Gender" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="femaleRadio" layoutX="117.0" layoutY="131.0" mnemonicParsing="false" text="Female" toggleGroup="$Gender" />
+
+         </children>
+      </Pane>
+      <Button fx:id="backButton" layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadLogin" text="back" />
+    </children>
+</AnchorPane>

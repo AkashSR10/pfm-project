@@ -5,18 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.Database.Connect;
+import sample.model.Login;
+
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/pick/pickMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/login/login.fxml"));
         primaryStage.setTitle("pfm-project");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        Connect database = new Connect();
-        database.connect();
+        Login database = new Login();
+        database.connectDB();
     }
 
 

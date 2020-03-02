@@ -1,39 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.adminController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.member.memberMovieSearch">
     <children>
-        <VBox layoutY="-8.0" prefHeight="815.0" prefWidth="350.0">
+        <VBox prefHeight="808.0" prefWidth="230.0">
             <children>
-                <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Roulette" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets bottom="1.0" top="1.0" />
-                    </VBox.margin>
-                </JFXButton>
-                <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Search" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets bottom="1.0" top="1.0" />
-                    </VBox.margin>
-                </JFXButton>
-                <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="My List" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets bottom="1.0" top="1.0" />
-                    </VBox.margin>
-                </JFXButton>
-                <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Recommendations (beta)" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets bottom="1.0" top="1.0" />
-                    </VBox.margin>
-                </JFXButton>
-                <JFXButton prefHeight="68.0" prefWidth="356.0" style="-fx-background-color: #651fff;" text="Log out" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets bottom="1.0" top="1.0" />
-                    </VBox.margin>
-                </JFXButton>
+                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="26.0" prefWidth="240.0" text="Search" />
+                <Button fx:id="watchlistButton" mnemonicParsing="false" onAction="#viewWatchlist" prefHeight="26.0" prefWidth="241.0" text="Watchlist" />
+                <Button fx:id="rouletteButton" mnemonicParsing="false" onAction="#roulette" prefHeight="26.0" prefWidth="256.0" text="Roulette" />
+                <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="241.0" text="Logout" />
             </children>
         </VBox>
     </children>

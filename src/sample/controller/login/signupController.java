@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.text.Text;
 import sample.User;
 import sample.model.Login;
 import sample.model.Signup;
@@ -52,6 +53,9 @@ public class signupController {
     @FXML
     private Button backButton;
 
+    @FXML
+    private Text error;
+
     ViewSwitcher scene = new ViewSwitcher();
 
     @FXML
@@ -59,17 +63,20 @@ public class signupController {
         backButton.getScene().getWindow().hide();
         scene.backtoLogin();
 
+
     }
 
     @FXML
     void initialize() {
         signupButton.setOnAction(event -> {
-            if (signUp()){
+            if (signUp()) {
                 signupButton.getScene().getWindow().hide();
-                scene.memberMenu();
+                scene.backtoLogin();
 
             } else {
                 System.out.print(("Error login in user")); // TODO add message for the user
+                //error.setText("Not all fields are filled in");
+
             }
         });
 
@@ -86,8 +93,13 @@ public class signupController {
         user.gender = maleRadio.isSelected() ? 0 : 1; //if the male box is selected the value is 0, if not than the value is 1.
         user.gender = femaleRadio.isSelected() ? 1 : 0;
 
+        if (user.email.isEmpty() || user.firstName.isEmpty() || user.password.isEmpty() || user.lastName.isEmpty() || user.password.isEmpty()) {
+            error.setText("One or multiple fields are not filled in");
+            return false;
+        } else {
 
         String saveMemberInfo = "INSERT INTO Member (Email, Password, First_name, Last_name, 'Gender') VALUES (?,?,?,?,?)"; //Add gender and admin when done
+
 
         try {
             String url = "jdbc:sqlite:db/test.db"; // db parameters
@@ -101,11 +113,36 @@ public class signupController {
             //add for admin
             stmt.execute();
 
+
         } catch (Exception e) {
-        System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        return false;
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
         }
+        }
+        signupButton.getScene().getWindow().hide();
+        scene.memberMenu();
+        return true;
+    }
+
+    //public boolean validateFields()
+    {
+        //  user.email
+
+        //if(user.email.isEmpty() | user.password.isEmpty())
+        {
+            //  error.setText("E-Mail field is not filled in correctly");
+            //return false;
+        }
+        //else
+        //{
+        //  signupButton.getScene().getWindow().hide();
+        // scene.memberMenu();
+        // return true;
+        //}
+        //}
     }
 }
+
+
 
 

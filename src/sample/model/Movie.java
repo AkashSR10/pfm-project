@@ -3,71 +3,78 @@ package sample.model;
 
     public class Movie {
 
-        public String primaryTitle;
-        public String titleType;
-        public String averageRating;
-        public String numVotes;
-        public String runtimeMinutes;
-        public String genre1;
-        public String genre2;
-        public String genre3;
-        public String director;
+        public int movieID;
+        public String title;
+        public String genre;
+        public int duration;
+        public int year;
         public String writer;
+        public String director;
+        public int rating;
+        public int numRating;
+        public int adult;
 
-        public String getPrimaryTitle() {
-            return primaryTitle;
+        public Movie(int movieID, String title, String genre, int duration, int year, String writer, String director, int rating, int numRating, int adult) {
+            this.movieID = movieID;
+            this.title = title;
+            this.genre = genre;
+            this.duration = duration;
+            this.year = year;
+            this.writer = writer;
+            this.director = director;
+            this.rating = rating;
+            this.numRating = numRating;
+            this.adult = adult;
         }
 
-        public void setPrimaryTitle(String primaryTitle) {
-            this.primaryTitle = primaryTitle;
+        public Movie(){}
+
+        public int getMovieID() {
+            return movieID;
         }
 
-        public String getTitleType() {
-            return titleType;
+        public void setMovieID(int movieID) {
+            this.movieID = movieID;
         }
 
-        public void setTitleType(String titleType) {
-            this.titleType = titleType;
+        public String getTitle() {
+            return title;
         }
 
-        public String getNumVotes() {
-            return numVotes;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public void setNumVotes(String numVotes) {
-            this.numVotes = numVotes;
+        public String getGenre() {
+            return genre;
         }
 
-        public String getRuntimeMinutes() {
-            return runtimeMinutes;
+        public void setGenre(String genre) {
+            this.genre = genre;
         }
 
-        public void setRuntimeMinutes(String runtimeMinutes) {
-            this.runtimeMinutes = runtimeMinutes;
+        public int getDuration() {
+            return duration;
         }
 
-        public String getGenre1() {
-            return genre1;
+        public void setDuration(int duration) {
+            this.duration = duration;
         }
 
-        public void setGenre1(String genre1) {
-            this.genre1 = genre1;
+        public int getYear() {
+            return year;
         }
 
-        public String getGenre2() {
-            return genre2;
+        public void setYear(int year) {
+            this.year = year;
         }
 
-        public void setGenre2(String genre2) {
-            this.genre2 = genre2;
+        public String getWriter() {
+            return writer;
         }
 
-        public String getGenre3() {
-            return genre3;
-        }
-
-        public void setGenre3(String genre3) {
-            this.genre3 = genre3;
+        public void setWriter(String writer) {
+            this.writer = writer;
         }
 
         public String getDirector() {
@@ -78,12 +85,31 @@ package sample.model;
             this.director = director;
         }
 
-        public String getWriter() {
-            return writer;
+        public int getRating() {
+            return rating;
         }
 
-        public void setWriter(String writer) {
-            this.writer = writer;
+        public void setRating(int rating) {
+            this.rating = rating;
+        }
+
+        public int getNumRating() {
+            return numRating;
+        }
+
+        public void setNumRating(int numRating) {
+            this.numRating = numRating;
+        }
+
+        public int getAdult() {
+            return adult;
+        }
+
+        public void setAdult(int adult) {
+            this.adult = adult;
         }
     }
+
+
+
 

@@ -32,5 +32,6 @@
          </children>
       </Pane>
       <Button fx:id="backButton" layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadLogin" text="back" />
+        <Text fx:id="error" fill="RED" layoutX="516.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="216.86083984375" />
     </children>
 </AnchorPane>

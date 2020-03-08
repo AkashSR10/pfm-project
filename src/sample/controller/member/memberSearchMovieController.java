@@ -116,8 +116,6 @@ public class memberSearchMovieController {
     @FXML
     private TableColumn<Movie, Integer> colAdult;
 
-    @FXML
-    private TableColumn<User, Integer> colID;
 
    private ObservableList<Movie> movies = FXCollections.observableArrayList();
 
@@ -135,7 +133,7 @@ public class memberSearchMovieController {
         colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         colVotes.setCellValueFactory(new PropertyValueFactory<>("numRating"));
         colAdult.setCellValueFactory(new PropertyValueFactory<>("adult"));
-        addButtonToTable();
+        addButtonToTable(); //TODO don't forget this in the roulette function
         movies = queries.getMovie();
         movieTable.setItems(movies);
 
@@ -181,6 +179,7 @@ public class memberSearchMovieController {
 
 
     //adding button to table to add to watchlist
+    // TODO add this in Roulette function
     public void addButtonToTable() {
         TableColumn<Movie, Void> colBtn = new TableColumn("Button Column");
 
@@ -196,7 +195,7 @@ public class memberSearchMovieController {
                             System.out.println("selectedData: " + data);
                             int MovieID = data.getMovieID(); //Creating and extra variable to call it
                             System.out.println("MovieID: " + MovieID); //test if it works
-                            merge(userID, MovieID); //Here I am calling/creating a method (see bellow), because the variable MovieID cannot be seen outside the these brackets
+                           //merge(userID, MovieID); //Here I am calling/creating a method (see bellow), because the variable MovieID cannot be seen outside the these brackets
                                     //Figure out a way to het the user ID here
                         });
                     }

@@ -5,9 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import sample.controller.login.loginController;
 import sample.model.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 
 import javafx.collections.FXCollections;
@@ -28,8 +33,7 @@ public class memberWatchlistController {
     ViewSwitcher view = new ViewSwitcher();
     int store_id2 = loginController.store_id;
 
-    @FXML
-    private TableView watchlistView;
+
 
     @FXML
     private Button searchMovieButton;
@@ -67,112 +71,49 @@ public class memberWatchlistController {
         view.memberWatchlist();
     }
 
-    @FXML
-    void initialize() {
+//    @FXML
+//    void initialize() {
+//
+//        GetMemberMovieID(store_id2);
+//    }
 
-        watchlist(store_id2);
-    }
-
-    // Connect DB
-    public static void connectDB() {
-        Connection c = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:db/test.db");
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Opened database successfully");
-    }
+//    // Connect DB
+//    public static void connectDB() {
+//        Connection c = null;
+//        try {
+//            Class.forName("org.sqlite.JDBC");
+//            c = DriverManager.getConnection("jdbc:sqlite:db/test.db");
+//        } catch (Exception e) {
+//            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//            System.exit(0);
+//        }
+//        System.out.println("Opened database successfully");
+//    }
 
     // Retrieve watchlist
 
-    public int watchlist (int userID) {
 
-        List<Movie> watchlist = new ArrayList();
 
-        try {
-            // SETUP
-            //*************
-            String query = "select * from watchlist where user_id = ? ";  // Set QUERY
-            //*************
-            Connection c = null;                                                            // Declare connection var
-            ResultSet rs = null;                                                     // Declare resultset
-            PreparedStatement preparedStatement = null;                                     // Declare preparedstatement
-            Class.forName("org.sqlite.JDBC");                                               // Load JDBC
-            c = DriverManager.getConnection("jdbc:sqlite:db/pfm.db");                  // Establish connection to DB
-            c.setAutoCommit(false);                                                         // Set autocommit to false -> see JBDC docs
-
-            // QUERY RESULTS
-            preparedStatement = c.prepareStatement(query);
-            preparedStatement.setInt(1, userID);
-            rs = preparedStatement.executeQuery();
-
-            // FUNCTION
-            while (rs.next()) {
-                Movie movie = new Movie();
-                movie.movieID = rs.getInt("Movie_id");
-                int UserID = rs.getInt("user_id");
-                int MovieID = rs.getInt("Movie_id");
-
-                System.out.printf("FOUND movie: %s for user: %s \n",MovieID, UserID);
-                watchlist.add(movie) ;
-            }
-            ObservableList<Movie> data = FXCollections.observableArrayList();
-            data.addAll(watchlist);
-            System.out.println("number of movies in data: " + data.size());
-            System.out.println(data.get(0).title);
-            watchlistView.setItems(data);
-
-            // CLOSE CONNECTION
-            rs.close();
-            preparedStatement.close();
-            c.close();
+    @FXML
+    private TableColumn UserID;
+    @FXML
+    private TableColumn MovieID;
 
 
 
+    @FXML
+    private TableView<Watchlist> watchlistView;
 
+    private ObservableList<Watchlist> valuesID = FXCollections.observableArrayList();
 
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            return -1;
-        }
-        System.out.println("Operation memberLogin done successfully");
-        return -1;
+    @FXML
+    void initialize() {
+        DBQueries queries = new DBQueries();
+        UserID.setCellValueFactory(new PropertyValueFactory<>("User_id")); //This variable should be changed once marko has made the query, also in thee memberWatchlist.fxml
+        MovieID.setCellValueFactory(new PropertyValueFactory<>("Movie_id")); //This variable should be changed once marko has made the query query, also in thee memberWatchlist.fxml
+        valuesID = queries.watchListMethod();
+        watchlistView.setItems(valuesID);
+
     }
 
-//
-//    private void Watchlist (){
-//
-//        Connection conn;
-//        String sql = "SELECT * FROM Movie";
-//        List<Movie> watchlist = new ArrayList();
-//
-//        try {
-//            String url = "jdbc:sqlite:db/pfm.db";
-//            conn = DriverManager.getConnection(url);
-//            PreparedStatement stmt = conn.prepareStatement(sql);
-//            ResultSet rs = stmt.executeQuery();
-//
-//            while (rs.next()) {
-//                Movie movie = new Movie();
-//                movie.title = rs.getString("Title");
-//                movie.rating = rs.getInt("Rating");
-//                movie.year = rs.getInt("Year");
-//                movie.genre= rs.getString("Genre");
-//                watchlist.add(movie);
-//
-//            }
-//            ObservableList<Movie> data = FXCollections.observableArrayList();
-//            data.addAll(watchlist);
-//            System.out.println("number of movies in data: " + data.size());
-//            System.out.println(data.get(0).title);
-//            watchlistView.setItems(data);
-//
-//        } catch (
-//                SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

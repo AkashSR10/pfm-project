@@ -3,11 +3,14 @@ package sample.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.User;
+import sample.controller.login.loginController;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBQueries {
     Connection c = null;                                                            // Declare connection var
@@ -223,31 +226,29 @@ public class DBQueries {
             //*************
             String query = "select * from user where email = ? and password = ? and admin = 0";  // Set QUERY
             //*************
-            Connection c = null;                                                            // Declare connection var
-            ResultSet resultSet = null;                                                     // Declare resultset
-            PreparedStatement preparedStatement = null;                                     // Declare preparedstatement
+            // Declare preparedstatement
             Class.forName("org.sqlite.JDBC");                                               // Load JDBC
             c = DriverManager.getConnection("jdbc:sqlite:db/pfm.db");                  // Establish connection to DB
             c.setAutoCommit(false);                                                         // Set autocommit to false -> see JBDC docs
 
             // QUERY RESULTS
-            preparedStatement = c.prepareStatement(query);
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
-            resultSet = preparedStatement.executeQuery();
+            stmt = c.prepareStatement(query);
+            stmt.setString(1, user);
+            stmt.setString(2, pass);
+            rs = stmt.executeQuery();
 
             // FUNCTION
-            if (resultSet.next()) {
-                int UserID = resultSet.getInt("user_id");
-                String Email = resultSet.getString("email");
-                String Admin = resultSet.getString("admin");
+            if (rs.next()) {
+                int UserID = rs.getInt("user_id");
+                String Email = rs.getString("email");
+                String Admin = rs.getString("admin");
                 System.out.println("");
                 System.out.printf("FOUND MEMBER UserID = %s ", UserID);
                 return UserID ;
             }
             // CLOSE CONNECTION
-            resultSet.close();
-            preparedStatement.close();
+            rs.close();
+            stmt.close();
             c.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -258,10 +259,61 @@ public class DBQueries {
     }
 
 
+    //Important, this function is here to display the watchlist to the user, however it now it only shows the UserID and MovieID because
+    //Marko first has to create a query between movie ID in the watchlist database and moviee ID in the Moviee database
+    //This means that the Watchlist function should in the end probably contain a second meethod (call a second method that contains what is in here now)
+    public ObservableList<Watchlist> watchListMethod (){
+
+        ObservableList<Watchlist> watchlist = FXCollections.observableArrayList();
+
+        try {
+            // SETUP
+            //*************
+            String query = "select * from watchlist where user_id = ? ";  // Set QUERY
+            //*************
+            // Declare preparedstatement
+            Class.forName("org.sqlite.JDBC");                                               // Load JDBC
+            c = DriverManager.getConnection("jdbc:sqlite:db/pfm.db");                  // Establish connection to DB
+            c.setAutoCommit(false);                                                         // Set autocommit to false -> see JBDC docs
+
+            // QUERY RESULTS
+            stmt = c.prepareStatement(query);
+            stmt.setInt(1, loginController.store_id); //uses the stored id from the previous method
+            rs = stmt.executeQuery();
+
+
+            while (rs.next()) {
+                watchlist.add(new Watchlist(
+                        rs.getInt("Movie_id"),
+                        rs.getInt("User_id")
+                ));
+
+            }
+
+            // CLOSE CONNECTION
+            rs.close();
+            stmt.close();
+            c.close();
+
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return watchlist;
+        }
+        System.out.println("Operation memberLogin done successfully");
+        return watchlist;
+    }
 
 
 }
 
 
-
-
+//
+//// FUNCTION
+//            while (rs.next()) {
+//
+//                    int UserID = rs.getInt("user_id");
+//                    int MovieID = rs.getInt("Movie_id");
+//                    System.out.printf("FOUND movie: %s for user: %s \n", MovieID, UserID);
+//
+//                    }

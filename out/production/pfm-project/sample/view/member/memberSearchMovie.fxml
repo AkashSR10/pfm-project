@@ -42,7 +42,6 @@
              </VBox>
       <TableView fx:id="movieTable" layoutX="260.0" layoutY="80.0" prefHeight="697.0" prefWidth="976.0">
         <columns>
-            <TableColumn fx:id="colID" prefWidth="55.4666748046875" text="Movie ID" />
           <TableColumn fx:id="colTitle" prefWidth="85.86666870117188" text="Title" />
           <TableColumn fx:id="colGenre" minWidth="0.0" prefWidth="93.59991455078125" text="Genre" />
             <TableColumn fx:id="colDuration" prefWidth="91.99990844726562" text="Duration" />

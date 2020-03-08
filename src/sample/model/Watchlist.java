@@ -14,6 +14,34 @@ import java.util.List;
 
 public class Watchlist {
 
+    int MovieID; //Change this when marko has made the query
+    int UserID;
+
+    public Watchlist(int MovieID, int UserID) {
+        this.MovieID = MovieID;
+        this.UserID = UserID;
+    }
+
+    public int getMovieID() {
+        return MovieID;
+    }
+
+    public void setMovieID(int movieID) {
+        MovieID = movieID;
+    }
+
+    public int getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(int userID) {
+        UserID = userID;
+    }
+}
+
+
+
+
 
 //    // Connect DB
 //    public static void connectDB() {
@@ -86,5 +114,3 @@ public class Watchlist {
 //        System.out.println("Operation memberLogin done successfully");
 //        return -1;
 //    }
-
-}

@@ -107,6 +107,7 @@ public class memberSearchMovieController {
         colVotes.setCellValueFactory(new PropertyValueFactory<>("numRating"));
         colAdult.setCellValueFactory(new PropertyValueFactory<>("adult"));
         movies = queries.getMovie();
+        movieTable.setItems(movies);
 
         // Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<Movie> filteredData = new FilteredList<>(movies, e -> true);
@@ -120,11 +121,17 @@ public class memberSearchMovieController {
                             }
                             // Compare first name and last name of every person with filter text.
                             String lowerCaseFilter = newValue.toLowerCase();
-                            if (movie.getTitle().contains(newValue)) {
+                            if (movie.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                                 return true; // Filter matches first name.
                             } if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
                                 return true; // Filter matches last name.
-                            } else {
+                            }
+                            if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)){
+                                    return true;
+                                } if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)){
+                             return true;
+                            }
+                            else {
                                 return false; // Does not match.
                             }
                         });

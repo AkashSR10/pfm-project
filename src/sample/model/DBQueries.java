@@ -10,12 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DBQueries {
+    Connection c = null;                                                            // Declare connection var
+    ResultSet rs = null;                                                           // Declare resultset
+    PreparedStatement stmt = null;
 
     public ObservableList<Movie> getMovie() {
         ObservableList<Movie> movies = FXCollections.observableArrayList();
-        Connection c = null;                                                            // Declare connection var
-        ResultSet rs = null;                                                           // Declare resultset
-        PreparedStatement preparedStatement = null;
         try {
             // SETUP
             //*******************************************************************************************************
@@ -27,8 +27,8 @@ public class DBQueries {
             c.setAutoCommit(false);                                                         // Set autocommit to false -> see JBDC docs
 
             // QUERY RESULTS
-            preparedStatement = c.prepareStatement(query);
-            rs = preparedStatement.executeQuery();
+            stmt = c.prepareStatement(query);
+            rs = stmt.executeQuery();
 
             // FUNCTION
             while (rs.next()) {
@@ -47,7 +47,7 @@ public class DBQueries {
             }
             // CLOSE CONNECTION
             rs.close();
-            preparedStatement.close();
+            stmt.close();
             c.close();
             return movies;
         } catch (Exception e) {
@@ -216,5 +216,6 @@ public class DBQueries {
         System.out.println("Operation adminLogin done successfully");
         return false;
     }
+
     }
 

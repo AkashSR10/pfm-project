@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,50 +15,34 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import sample.User;
-import sample.model.Login;
-import sample.model.Signup;
 import sample.model.ViewSwitcher;
 
 public class signupController {
-
+    ViewSwitcher scene = new ViewSwitcher();
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private Text error;
-
-
     @FXML
     private TextField firstnameText;
-
     @FXML
     private TextField lastnameText;
-
     @FXML
     private TextField emailText;
-
     @FXML
     private PasswordField passwordText;
-
     @FXML
     private Button signupButton;
-
     @FXML
     private RadioButton maleRadio;
-
     @FXML
     private ToggleGroup Gender;
-
     @FXML
     private RadioButton femaleRadio;
-
     @FXML
     private Button backButton;
-
-    ViewSwitcher scene = new ViewSwitcher();
 
     @FXML
     void loadLogin(ActionEvent event) {
@@ -66,24 +51,19 @@ public class signupController {
 
     }
 
-
-
     @FXML
     void initialize() {
         signupButton.setOnAction(event -> {
-            if (signUp()){
+            if (signUp()) {
                 signupButton.getScene().getWindow().hide();
                 scene.memberMenu();
-
             } else {
                 System.out.print(("Error login in user")); // TODO add message for the user
             }
         });
-
     }
 
     public boolean signUp() {
-
         User user;
         user = new User();
         Connection conn;
@@ -115,7 +95,8 @@ public class signupController {
             } catch (Exception e) {
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 return false;
-            } }
+            }
+        }
         return true;
     }
 }

@@ -10,32 +10,36 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.member.memberSearchMovieController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #323232;" stylesheets="@../FlatBee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.member.memberSearchMovieController">
    <children>
-      <VBox prefHeight="808.0" prefWidth="230.0">
-         <children>
-            <Button fx:id="searchMovieButton" mnemonicParsing="false" onAction="#loadSearchMovie" prefHeight="60.0" prefWidth="240.0" text="Search Movies">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Button>
-            <Button fx:id="watchlistButton" mnemonicParsing="false" onAction="#loadWatchlist" prefHeight="60.0" prefWidth="241.0" text="Watchlist">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Button>
-            <Button fx:id="rouletteButton" mnemonicParsing="false" onAction="#loadRoulette" prefHeight="60.0" prefWidth="256.0" text="Roulette">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Button>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#loadLogout" prefHeight="60.0" prefWidth="241.0" text="Logout">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Button>
-         </children>
-      </VBox>
-      <Text layoutX="272.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Movie">
-         <font>
-            <Font size="30.0" />
-         </font></Text>
+             <VBox prefHeight="808.0" prefWidth="230.0" style="-fx-background-color: #212121;">
+                 <children>
+                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MEMBER MENU" textAlignment="CENTER" wrappingWidth="229.2664031982422">
+                         <font>
+                             <Font size="25.0" />
+                         </font>
+                         <VBox.margin>
+                             <Insets top="20.0" />
+                         </VBox.margin>
+                     </Text>
+                     <Button fx:id="searchMovieButton" mnemonicParsing="false" onAction="#loadSearchMovie" prefHeight="70.0" prefWidth="240.0" text="Search Movies">
+                         <VBox.margin>
+                             <Insets bottom="1.0" top="30.0" />
+                         </VBox.margin></Button>
+                     <Button fx:id="watchlistButton" mnemonicParsing="false" onAction="#loadWatchlist" prefHeight="70.0" prefWidth="241.0" text="Watchlist">
+                         <VBox.margin>
+                             <Insets bottom="1.0" top="1.0" />
+                         </VBox.margin></Button>
+                     <Button fx:id="rouletteButton" mnemonicParsing="false" onAction="#loadRoulette" prefHeight="70.0" prefWidth="256.0" text="Roulette">
+                         <VBox.margin>
+                             <Insets bottom="1.0" top="1.0" />
+                         </VBox.margin></Button>
+                     <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#loadLogout" prefHeight="70.0" prefWidth="241.0" text="Logout">
+                         <VBox.margin>
+                             <Insets bottom="1.0" top="1.0" />
+                         </VBox.margin></Button>
+                 </children>
+             </VBox>
       <TableView fx:id="movieTable" layoutX="260.0" layoutY="80.0" prefHeight="697.0" prefWidth="976.0">
         <columns>
           <TableColumn fx:id="colTitle" prefWidth="85.86666870117188" text="Title" />
@@ -49,6 +53,11 @@
             <TableColumn fx:id="colAdult" prefWidth="73.5999755859375" text="Adult" />
         </columns>
       </TableView>
-      <TextField fx:id="searchField" layoutX="491.0" layoutY="21.0" />
+      <TextField fx:id="searchField" layoutX="1065.0" layoutY="24.0" promptText="Search in all columns" />
+       <Text fill="WHITE" layoutX="256.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movies">
+           <font>
+               <Font size="30.0" />
+           </font>
+       </Text>
    </children>
 </AnchorPane>

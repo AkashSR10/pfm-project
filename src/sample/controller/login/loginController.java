@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import sample.User;
+import sample.model.DBQueries;
 import sample.model.Login;
 import sample.model.ViewSwitcher;
 
@@ -42,7 +43,7 @@ public class loginController {
     @FXML
    public void loadLogin(ActionEvent event) throws SQLException {
         // Make new Objects
-        Login login = new Login();
+        DBQueries query = new DBQueries();
         User user = new User();
 
         // Get text from inputs
@@ -50,11 +51,11 @@ public class loginController {
         user.password = passwordText.getText().trim();
 
         // Checks if combination is correct and a  member
-        if (login.memberLogin(user.email, user.password)) {
+        if (query.memberLogin(user.email, user.password)) {
             loginButton.getScene().getWindow().hide();
             view.memberMenu();
             // Checks if combination is correct and an admin
-        } else if (login.adminLogin(emailText.getText().trim(), passwordText.getText().trim())) {
+        } else if (query.adminLogin(emailText.getText().trim(), passwordText.getText().trim())) {
             loginButton.getScene().getWindow().hide();
             view.adminMenu();
             // Returns error if the user is not a member or admin

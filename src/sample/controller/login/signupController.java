@@ -74,7 +74,7 @@ public class signupController {
         user.gender = maleRadio.isSelected() ? 0 : 1; //if the male box is selected the value is 0, if not than the value is 1.
         user.gender = femaleRadio.isSelected() ? 1 : 0;
 
-        if (user.email.isEmpty() || user.firstName.isEmpty() || user.password.isEmpty() || user.lastName.isEmpty() || user.password.isEmpty()) {
+        if (user.email.isEmpty() || user.firstName.isEmpty() || user.password.isEmpty() || user.lastName.isEmpty() || user.password.isEmpty() || (maleRadio.isSelected() == false) && (femaleRadio.isSelected() == false)) {
             error.setText("One or multiple fields are not filled in");
             return false;
         } else {

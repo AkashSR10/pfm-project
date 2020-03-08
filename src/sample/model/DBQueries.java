@@ -98,7 +98,7 @@ public class DBQueries {
         return users;
     }
 
-    public boolean signUp(String email, String password, String firstName, String lastName,  int gender) {
+    public boolean signUp(String email, String password, String firstName, String lastName, int gender) {
 
         Connection conn;
 
@@ -117,8 +117,7 @@ public class DBQueries {
             //add for admin
             stmt.executeUpdate();
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
@@ -217,5 +216,52 @@ public class DBQueries {
         return false;
     }
 
+
+    public int Store_id (String user, String pass) {
+        try {
+            // SETUP
+            //*************
+            String query = "select * from user where email = ? and password = ? and admin = 0";  // Set QUERY
+            //*************
+            Connection c = null;                                                            // Declare connection var
+            ResultSet resultSet = null;                                                     // Declare resultset
+            PreparedStatement preparedStatement = null;                                     // Declare preparedstatement
+            Class.forName("org.sqlite.JDBC");                                               // Load JDBC
+            c = DriverManager.getConnection("jdbc:sqlite:db/pfm.db");                  // Establish connection to DB
+            c.setAutoCommit(false);                                                         // Set autocommit to false -> see JBDC docs
+
+            // QUERY RESULTS
+            preparedStatement = c.prepareStatement(query);
+            preparedStatement.setString(1, user);
+            preparedStatement.setString(2, pass);
+            resultSet = preparedStatement.executeQuery();
+
+            // FUNCTION
+            if (resultSet.next()) {
+                int UserID = resultSet.getInt("user_id");
+                String Email = resultSet.getString("email");
+                String Admin = resultSet.getString("admin");
+                System.out.println("");
+                System.out.printf("FOUND MEMBER UserID = %s ", UserID);
+                return UserID ;
+            }
+            // CLOSE CONNECTION
+            resultSet.close();
+            preparedStatement.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return -1;
+        }
+        System.out.println("Operation memberLogin done successfully");
+        return -1;
     }
+
+
+
+
+}
+
+
+
 

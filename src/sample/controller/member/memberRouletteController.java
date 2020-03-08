@@ -44,4 +44,7 @@ public class memberRouletteController{
         watchlistButton.getScene().getWindow().hide();
         view.memberWatchlist();
     }
+
+
+
 }

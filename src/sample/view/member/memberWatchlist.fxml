@@ -6,6 +6,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
 <?import javafx.geometry.Insets?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #323232;" stylesheets="@../FlatBee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.member.memberWatchlistController">
     <children>
@@ -42,5 +50,18 @@
                 <Font size="30.0" />
             </font>
         </Text>
+
     </children>
+    <TableView fx:id="watchlistView" layoutX="256.0" layoutY="84.0" prefHeight="550.0" prefWidth="954.0">
+        <columns>
+            <TableColumn fx:id="UserID" text="UserID">
+                <cellValueFactory><PropertyValueFactory property="primaryTitle" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="MovieID" text="MovieID">
+                <cellValueFactory><PropertyValueFactory property="averageRating" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
 </AnchorPane>

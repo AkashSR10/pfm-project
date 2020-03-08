@@ -1,5 +1,16 @@
 package sample.controller.member;
 
+
+import java.awt.event.MouseEvent;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ResourceBundle;
+import java.util.function.Predicate;
+import javafx.util.Callback; // Yv added
+
+import javafx.scene.control.TableCell; //Yv added
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,6 +22,21 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import sample.User;
+import sample.controller.login.loginController;
+import sample.model.DBQueries;
+import sample.model.Movie;
+import sample.model.ViewSwitcher;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import sample.model.DBQueries;
 import sample.model.Movie;
 import sample.model.ViewSwitcher;
@@ -90,6 +116,9 @@ public class memberSearchMovieController {
     @FXML
     private TableColumn<Movie, Integer> colAdult;
 
+    @FXML
+    private TableColumn<User, Integer> colID;
+
    private ObservableList<Movie> movies = FXCollections.observableArrayList();
 
 
@@ -106,6 +135,7 @@ public class memberSearchMovieController {
         colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         colVotes.setCellValueFactory(new PropertyValueFactory<>("numRating"));
         colAdult.setCellValueFactory(new PropertyValueFactory<>("adult"));
+        addButtonToTable();
         movies = queries.getMovie();
         movieTable.setItems(movies);
 
@@ -148,6 +178,61 @@ public class memberSearchMovieController {
 
         // 5. Add sorted (and filtered) data to the table.
     }
+
+
+    //adding button to table to add to watchlist
+    public void addButtonToTable() {
+        TableColumn<Movie, Void> colBtn = new TableColumn("Button Column");
+
+        Callback<TableColumn<Movie, Void>, TableCell<Movie, Void>> cellFactory = new Callback<TableColumn<Movie, Void>, TableCell<Movie, Void>>() {
+
+            @Override
+            public TableCell<Movie, Void> call(final TableColumn<Movie, Void> param) {
+                final TableCell<Movie, Void> cell = new TableCell<Movie, Void>() {
+
+                    public final Button btn = new Button("Add to Watchlist"); {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Movie data = getTableView().getItems().get(getIndex());
+                            System.out.println("selectedData: " + data);
+                            int MovieID = data.getMovieID(); //Creating and extra variable to call it
+                            System.out.println("MovieID: " + MovieID); //test if it works
+                            merge(userID, MovieID); //Here I am calling/creating a method (see bellow), because the variable MovieID cannot be seen outside the these brackets
+                                    //Figure out a way to het the user ID here
+                        });
+                    }
+
+
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+
+
+        colBtn.setCellFactory(cellFactory);
+
+        movieTable.getColumns().add(colBtn);
+
+    }
+
+    public void merge (int UserID, int MovieID) {
+
+
+
+    }
+
+
+
 }
 
 

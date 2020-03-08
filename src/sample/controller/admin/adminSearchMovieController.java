@@ -1,12 +1,15 @@
 package sample.controller.admin;
 
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+import javafx.util.Callback; // Yv added
 
+import javafx.scene.control.TableCell; //Yv added
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import sample.User;
+import sample.controller.login.loginController;
 import sample.model.DBQueries;
 import sample.model.Movie;
 import sample.model.ViewSwitcher;
@@ -167,15 +171,16 @@ public class adminSearchMovieController {
                     String lowerCaseFilter = newValue.toLowerCase();
                     if (movie.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                         return true; // Filter matches first name.
-                    } if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
+                    }
+                    if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
                         return true; // Filter matches last name.
                     }
-                    if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)){
-                        return true;
-                    } if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)){
+                    if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
-                    else {
+                    if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else {
                         return false; // Does not match.
                     }
                 });
@@ -187,7 +192,7 @@ public class adminSearchMovieController {
 
         addButton.setOnAction(event -> {
             if (addMovie()) {
-movieTable.refresh();
+                movieTable.refresh();
             } else {
                 System.out.print(("Error login in user")); // TODO add message for the user
             }
@@ -240,4 +245,7 @@ movieTable.refresh();
 
         return true;
     }
+
+
+
 }

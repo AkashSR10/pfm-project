@@ -7,6 +7,13 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #323232;" stylesheets="@../FlatBee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.admin.adminWatchlistController">
     <children>
         <VBox prefHeight="808.0" prefWidth="230.0" style="-fx-background-color: #212121;">
@@ -46,5 +53,26 @@
                 <Font size="30.0" />
             </font>
         </Text>
+
+        <TableView fx:id="watchlistView" layoutX="256.0" layoutY="84.0" prefHeight="550.0" prefWidth="954.0">
+        <columns>
+            <TableColumn text="Title">
+                <cellValueFactory><PropertyValueFactory property="primaryTitle" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Rating">
+                <cellValueFactory><PropertyValueFactory property="averageRating" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Year">
+                <cellValueFactory><PropertyValueFactory property="year" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Genre">
+                <cellValueFactory><PropertyValueFactory property="genre1" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+        </TableView>
     </children>
 </AnchorPane>

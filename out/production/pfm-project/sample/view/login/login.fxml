@@ -4,58 +4,53 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../resources/FlatBee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.login.loginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.login.loginController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="177.0" stroke="BLACK" strokeType="INSIDE" width="1294.0">
-         <fill>
-            <LinearGradient endX="1.0">
-               <stops>
-                  <Stop color="#5f00ed" />
-                  <Stop color="#5f00edcf" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </fill>
-      </Rectangle>
-      <Text fill="WHITE" layoutX="339.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIE ROULETTE" textAlignment="CENTER">
-         <font>
-            <Font name="Google Sans Bold" size="75.0" />
-         </font>
-      </Text>
-      <Text fx:id="error" fill="RED" layoutX="545.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="180.0" />
-      <VBox layoutX="554.0" layoutY="328.0" prefHeight="51.0" prefWidth="162.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#16a085" height="293.0" layoutX="-19.0" layoutY="-6.0" stroke="#16a085" strokeType="INSIDE" width="1322.0" />
+      <Text fx:id="error" fill="#e74c3c" layoutX="545.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="180.0" />
+      <VBox layoutX="557.0" layoutY="357.0" prefHeight="51.0" prefWidth="162.0">
          <children>
-            <JFXTextField fx:id="emailText" />
-            <JFXPasswordField fx:id="passwordText" />
+            <JFXTextField fx:id="emailField" focusColor="#16a085" labelFloat="true" promptText="Email">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXPasswordField fx:id="passwordField" focusColor="#16a085" labelFloat="true" promptText="Password">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXPasswordField>
          </children>
       </VBox>
-      <VBox layoutX="589.0" layoutY="398.0" prefHeight="73.0" prefWidth="100.0">
+      <VBox layoutX="558.0" layoutY="478.0" prefHeight="74.0" prefWidth="162.0">
          <children>
-            <JFXButton text="Log in" />
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loadLogin" prefHeight="25.0" prefWidth="100.0" text="Log in" />
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+            <JFXButton fx:id="loginButton" buttonType="RAISED" defaultButton="true" onAction="#loadLogin" prefHeight="26.0" prefWidth="165.0" style="-fx-background-color: #2c3e50;" text="Login" textFill="WHITE">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></JFXButton>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="-or-" textAlignment="CENTER">
                <font>
-                  <Font size="14.0" />
+                  <Font size="10.0" />
                </font>
                <VBox.margin>
-                  <Insets left="40.0" />
+                  <Insets bottom="5.0" left="74.0" top="5.0" />
                </VBox.margin>
             </Text>
-            <Button fx:id="signupButton" mnemonicParsing="false" onAction="#loadSignup" prefHeight="25.0" prefWidth="100.0" text="Sign up" />
-            <JFXButton text="Sign p" />
+            <JFXButton fx:id="signupButton" onAction="#loadSignup" prefHeight="26.0" prefWidth="116.0" style="-fx-background-color: #2c3e50;" text="Sign up" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="25.0" />
+               </VBox.margin></JFXButton>
          </children>
       </VBox>
-      <Text layoutX="590.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER">
+      <Text fill="WHITE" layoutX="380.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIE ROULETTE" textAlignment="CENTER" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="379.3798828125">
          <font>
-            <Font name="Google Sans Regular" size="40.0" />
+            <Font size="66.0" />
          </font>
       </Text>
    </children>

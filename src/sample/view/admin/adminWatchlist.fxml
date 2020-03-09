@@ -31,10 +31,6 @@
                     <VBox.margin>
                         <Insets bottom="1.0" top="1.0" />
                     </VBox.margin></Button>
-                <Button fx:id="rouletteButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="256.0" text="Roulette">
-                    <VBox.margin>
-                        <Insets bottom="1.0" top="1.0" />
-                    </VBox.margin></Button>
                 <Button fx:id="logoutButton" cancelButton="true" mnemonicParsing="false" onAction="#loadLogout" prefHeight="70.0" prefWidth="241.0" text="Logout">
                     <VBox.margin>
                         <Insets bottom="1.0" top="1.0" />

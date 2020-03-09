@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,25 +27,35 @@ public class signupController {
     @FXML
     private URL location;
     @FXML
-    private Text error;
+    private JFXTextField firstNameField;
+
     @FXML
-    private TextField firstnameText;
+    private JFXTextField lastNameField;
+
     @FXML
-    private TextField lastnameText;
+    private JFXTextField emailField;
+
     @FXML
-    private TextField emailText;
+    private JFXTextField passwordField;
+
     @FXML
-    private PasswordField passwordText;
-    @FXML
-    private Button signupButton;
-    @FXML
-    private RadioButton maleRadio;
+    private JFXRadioButton maleRadio;
+
     @FXML
     private ToggleGroup Gender;
+
     @FXML
-    private RadioButton femaleRadio;
+    private JFXRadioButton femaleRadio;
+
     @FXML
-    private Button backButton;
+    private JFXButton signupButton;
+
+    @FXML
+    private JFXButton backButton;
+
+    @FXML
+    private Text error;
+
 
     @FXML
     void loadLogin(ActionEvent event) {
@@ -67,10 +80,10 @@ public class signupController {
         User user;
         user = new User();
         Connection conn;
-        user.email = emailText.getText().trim();
-        user.firstName = firstnameText.getText().trim();
-        user.lastName = lastnameText.getText().trim();
-        user.password = passwordText.getText().trim();
+        user.email = emailField.getText().trim();
+        user.firstName = firstNameField.getText().trim();
+        user.lastName = lastNameField.getText().trim();
+        user.password = passwordField.getText().trim();
         user.gender = maleRadio.isSelected() ? 0 : 1; //if the male box is selected the value is 0, if not than the value is 1.
         user.gender = femaleRadio.isSelected() ? 1 : 0;
 

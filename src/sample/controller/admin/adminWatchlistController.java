@@ -3,6 +3,7 @@ package sample.controller.admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import sample.model.Admin;
 import sample.model.DBQueries;
 import sample.model.ViewSwitcher;
 

@@ -11,9 +11,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.model.DBQueries;
-import sample.model.Movie;
-import sample.model.ViewSwitcher;
+import javafx.scene.input.KeyEvent;
+import sample.model.*;
 
 import java.util.function.Predicate;
 import java.util.logging.Filter;
@@ -35,6 +34,43 @@ public class memberSearchMovieController {
 
     @FXML
     private TextField searchField;
+
+    @FXML
+    void search(KeyEvent event) {
+// Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Movie> filteredData = new FilteredList<>(movies, e -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        searchField.setOnKeyReleased(e -> {
+            searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+                filteredData.setPredicate((Predicate<? super Movie>) movie -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    // Compare first name and last name of every person with filter text.
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (movie.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches first name.
+                    }
+                    if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches last name.
+                    }
+                    if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else {
+                        return false; // Does not match.
+                    }
+                });
+            });
+            SortedList<Movie> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(movieTable.comparatorProperty());
+            movieTable.setItems(sortedData);
+        });
+    }
+
 
     @FXML
     void loadLogout(ActionEvent event) {
@@ -64,6 +100,9 @@ public class memberSearchMovieController {
     private TableView<Movie> movieTable;
 
     @FXML
+    private TableColumn<Movie, String> colID;
+
+    @FXML
     private TableColumn<Movie, String> colTitle;
 
     @FXML
@@ -90,13 +129,53 @@ public class memberSearchMovieController {
     @FXML
     private TableColumn<Movie, Integer> colAdult;
 
-   private ObservableList<Movie> movies = FXCollections.observableArrayList();
+    private ObservableList<Movie> movies = FXCollections.observableArrayList();
 
+    @FXML
+    private TextField movieIDField;
 
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private TextField genreField;
+
+    @FXML
+    private TextField durationField;
+
+    @FXML
+    private TextField yearField;
+
+    @FXML
+    private TextField writerField;
+
+    @FXML
+    private TextField directorField;
+
+    @FXML
+    private TextField ratingField;
+
+    @FXML
+    private TextField votesField;
+
+    @FXML
+    private TextField adultField;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    void addToWatchlist(ActionEvent event) {
+        Member member = new Member();
+        int userID = 1;
+        int movieID = Integer.parseInt(movieIDField.getText());
+        member.addMovieWatchlist(userID, movieID);
+    }
 
     @FXML
     void initialize() {
-        DBQueries queries = new DBQueries();
+        SQLite queries = new SQLite();
+        colID.setCellValueFactory(new PropertyValueFactory<>("movieID"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         colDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -109,45 +188,31 @@ public class memberSearchMovieController {
         movies = queries.getMovie();
         movieTable.setItems(movies);
 
-        // Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Movie> filteredData = new FilteredList<>(movies, e -> true);
+        movieTable.setOnMouseClicked(e -> {
+            Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+            System.out.println(movie.getMovieID());
+            String movieID = String.valueOf(movie.getMovieID());
+            String title = movie.getTitle();
+            String genre = movie.getGenre();
+            String duration = String.valueOf(movie.getDuration());
+            String year = String.valueOf(movie.getYear());
+            String writer = movie.getWriter();
+            String director = movie.getDirector();
+            String rating = String.valueOf(movie.getRating());
+            String votes = String.valueOf(movie.getNumRating());
+            String adult = String.valueOf(movie.getAdult());
 
-        // 2. Set the filter Predicate whenever the filter changes.
-        searchField.setOnKeyReleased(e -> {
-                    searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-                        filteredData.setPredicate((Predicate<? super Movie>) movie -> {
-                            if (newValue == null || newValue.isEmpty()) {
-                                return true;
-                            }
-                            // Compare first name and last name of every person with filter text.
-                            String lowerCaseFilter = newValue.toLowerCase();
-                            if (movie.getTitle().toLowerCase().contains(lowerCaseFilter)) {
-                                return true; // Filter matches first name.
-                            } if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
-                                return true; // Filter matches last name.
-                            }
-                            if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)){
-                                    return true;
-                                } if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)){
-                             return true;
-                            }
-                            else {
-                                return false; // Does not match.
-                            }
-                        });
-                    });
-            SortedList<Movie> sortedData = new SortedList<>(filteredData);
-            sortedData.comparatorProperty().bind(movieTable.comparatorProperty());
-            movieTable.setItems(sortedData);
-                    });
-
-        // 3. Wrap the FilteredList in a SortedList.
-
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        // 	  Otherwise, sorting the TableView would have no effect.
-
-        // 5. Add sorted (and filtered) data to the table.
+            movieIDField.setText(movieID);
+            titleField.setText(title);
+            genreField.setText(genre);
+            durationField.setText(duration);
+            yearField.setText(year);
+            writerField.setText(writer);
+            directorField.setText(director);
+            ratingField.setText(rating);
+            votesField.setText(votes);
+            adultField.setText(adult);
+        });
     }
 }
-
 

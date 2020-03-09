@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #323232;" stylesheets="@../FlatBee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.login.signupController">
     <children>
-        <Text fill="#212121" layoutX="516.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER SIGN UP">
+        <Text fill="WHITE" layoutX="516.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER SIGN UP">
             <font>
                 <Font size="30.0" />
             </font></Text>
@@ -23,11 +23,11 @@
             <TextField fx:id="emailText" layoutX="12.0" layoutY="49.0" prefHeight="26.0" prefWidth="190.0" promptText="Email" />
             <PasswordField fx:id="passwordText" layoutX="12.0" layoutY="87.0" prefHeight="26.0" prefWidth="190.0" promptText="Password" />
             <Button fx:id="signupButton" layoutX="12.0" layoutY="162.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" text="Sign up" />
-            <RadioButton fx:id="maleRadio" layoutX="17.0" layoutY="129.0" mnemonicParsing="false" text="Male">
+            <RadioButton fx:id="maleRadio" layoutX="17.0" layoutY="129.0" mnemonicParsing="false" selected="true" text="Male" textFill="WHITE">
                <toggleGroup>
                   <ToggleGroup fx:id="Gender" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="femaleRadio" layoutX="117.0" layoutY="131.0" mnemonicParsing="false" text="Female" toggleGroup="$Gender" />
+            <RadioButton fx:id="femaleRadio" layoutX="117.0" layoutY="131.0" mnemonicParsing="false" text="Female" textFill="WHITE" toggleGroup="$Gender" />
 
          </children>
       </Pane>

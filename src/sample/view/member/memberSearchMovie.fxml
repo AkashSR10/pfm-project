@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -22,7 +23,7 @@
                              <Insets top="20.0" />
                          </VBox.margin>
                      </Text>
-                     <Button fx:id="searchMovieButton" mnemonicParsing="false" onAction="#loadSearchMovie" prefHeight="70.0" prefWidth="240.0" text="Search Movies">
+                     <Button fx:id="searchMovieButton" defaultButton="true" mnemonicParsing="false" onAction="#loadSearchMovie" prefHeight="70.0" prefWidth="240.0" text="Search Movies">
                          <VBox.margin>
                              <Insets bottom="1.0" top="30.0" />
                          </VBox.margin></Button>
@@ -34,15 +35,16 @@
                          <VBox.margin>
                              <Insets bottom="1.0" top="1.0" />
                          </VBox.margin></Button>
-                     <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#loadLogout" prefHeight="70.0" prefWidth="241.0" text="Logout">
+                     <Button fx:id="logoutButton" cancelButton="true" mnemonicParsing="false" onAction="#loadLogout" prefHeight="70.0" prefWidth="241.0" text="Logout">
                          <VBox.margin>
                              <Insets bottom="1.0" top="1.0" />
                          </VBox.margin></Button>
                  </children>
              </VBox>
-      <TableView fx:id="movieTable" layoutX="260.0" layoutY="80.0" prefHeight="697.0" prefWidth="976.0">
+      <TableView fx:id="movieTable" layoutX="260.0" layoutY="80.0" prefHeight="496.0" prefWidth="976.0">
         <columns>
-          <TableColumn fx:id="colTitle" prefWidth="85.86666870117188" text="Title" />
+            <TableColumn fx:id="colID" prefWidth="55.4666748046875" text="Movie ID" />
+            <TableColumn fx:id="colTitle" prefWidth="85.86666870117188" text="Title" />
           <TableColumn fx:id="colGenre" minWidth="0.0" prefWidth="93.59991455078125" text="Genre" />
             <TableColumn fx:id="colDuration" prefWidth="91.99990844726562" text="Duration" />
             <TableColumn fx:id="colYear" prefWidth="64.26666259765625" text="Year" />
@@ -52,12 +54,32 @@
             <TableColumn fx:id="colVotes" prefWidth="73.3333740234375" text="# Votes" />
             <TableColumn fx:id="colAdult" prefWidth="73.5999755859375" text="Adult" />
         </columns>
+          <TextField fx:id="searchField" layoutX="1065.0" layoutY="24.0" onKeyReleased="#search" promptText="Search in all columns" />
       </TableView>
-      <TextField fx:id="searchField" layoutX="1065.0" layoutY="24.0" promptText="Search in all columns" />
+       <HBox layoutX="256.0" layoutY="690.0" prefHeight="30.0" prefWidth="786.0">
+           <children>
+               <TextField fx:id="movieIDField" editable="false" prefHeight="23.0" prefWidth="67.0" promptText="Movie ID" />
+               <TextField fx:id="titleField" editable="false" prefHeight="23.0" prefWidth="139.0" promptText="Title" />
+               <TextField fx:id="genreField" editable="false" prefHeight="23.0" prefWidth="81.0" promptText="Genre" />
+               <TextField fx:id="durationField" editable="false" prefHeight="23.0" prefWidth="67.0" promptText="Duration" />
+               <TextField fx:id="yearField" editable="false" prefHeight="23.0" prefWidth="67.0" promptText="Year" />
+               <TextField fx:id="writerField" editable="false" prefHeight="23.0" prefWidth="92.0" promptText="Writer" />
+               <TextField fx:id="directorField" editable="false" prefHeight="23.0" prefWidth="117.0" promptText="Director" />
+               <TextField fx:id="ratingField" editable="false" prefHeight="23.0" prefWidth="67.0" promptText="Rating" />
+               <TextField fx:id="votesField" editable="false" prefHeight="23.0" prefWidth="67.0" promptText="# Votes" />
+               <TextField fx:id="adultField" editable="false" prefHeight="23.0" prefWidth="67.0" promptText="Adult" />
+           </children>
+       </HBox>
        <Text fill="WHITE" layoutX="256.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movies">
            <font>
                <Font size="30.0" />
            </font>
        </Text>
+      <Button fx:id="addButton" layoutX="1077.0" layoutY="690.0" mnemonicParsing="false" onAction="#addToWatchlist" text="Add to watchlist" />
+      <Text fill="WHITE" layoutX="260.0" layoutY="638.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add to watchlist">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

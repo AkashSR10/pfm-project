@@ -92,6 +92,8 @@ public class signupController {
                 stmt.setInt(5, user.gender); //this line sets a value for the first question mark in string saveMemberInfo
                 //add for admin
                 stmt.execute();
+                stmt.close();
+                conn.close();
             } catch (Exception e) {
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 return false;

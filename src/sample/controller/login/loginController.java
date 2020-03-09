@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import sample.User;
 import sample.model.DBQueries;
 import sample.model.Login;
+import sample.model.SQLite;
 import sample.model.ViewSwitcher;
 
 public class loginController {
@@ -43,7 +44,7 @@ public class loginController {
     @FXML
    public void loadLogin(ActionEvent event) throws SQLException {
         // Make new Objects
-        DBQueries query = new DBQueries();
+        SQLite query = new SQLite();
         User user = new User();
 
         // Get text from inputs

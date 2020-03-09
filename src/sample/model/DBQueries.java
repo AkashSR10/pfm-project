@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DBQueries {
     Connection c = null;                                                            // Declare connection var
@@ -94,21 +91,29 @@ public class DBQueries {
             return users;
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            try {
+                rs.close();
+                preparedStatement.close();
+                c.close();
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+
+            }
         }
         return users;
     }
 
     public boolean signUp(String email, String password, String firstName, String lastName,  int gender) {
 
-        Connection conn;
 
 
         String saveMemberInfo = "INSERT INTO Member (Email, Password, First_name, Last_name, Gender) VALUES (?,?,?,?,?)"; //Add gender and admin when done
 
         try {
             String url = "jdbc:sqlite:db/pfm.db"; // db parameters
-            conn = DriverManager.getConnection(url);// create a connection to the database
-            PreparedStatement stmt = conn.prepareStatement(saveMemberInfo); //we use a prepared statement to input the values
+            c = DriverManager.getConnection(url);// create a connection to the database
+            PreparedStatement stmt = c.prepareStatement(saveMemberInfo); //we use a prepared statement to input the values
             stmt.setString(1, email); //this line sets a value for the first question mark in string saveMemberInfo
             stmt.setString(2, password); //this line sets a value for the first question mark in string saveMemberInfo
             stmt.setString(3, firstName); //this line sets a value for the first question mark in string saveMemberInfo
@@ -116,6 +121,8 @@ public class DBQueries {
             stmt.setInt(5, gender); //this line sets a value for the first question mark in string saveMemberInfo
             //add for admin
             stmt.executeUpdate();
+            stmt.close();
+            c.close();
             return true;
         }
         catch (Exception e) {
@@ -178,44 +185,7 @@ public class DBQueries {
     }
 
     // Login Method Admin
-    public boolean adminLogin(String user, String pass) {
-        try {
-            // SETUP
-            //*******************************************************************************************************
-            String query = "select * from user where email = ? and password = ? and admin = 1";  // Set QUERY
-            //*******************************************************************************************************
-            Connection c = null;                                                            // Declare connection var
-            ResultSet resultSet = null;                                                     // Declare resultset
-            PreparedStatement preparedStatement = null;                                     // Declare preparedstatement
-            Class.forName("org.sqlite.JDBC");                                               // Load JDBC
-            c = DriverManager.getConnection("jdbc:sqlite:db/pfm.db");                  // Establish connection to DB
-            c.setAutoCommit(false);                                                         // Set autocommit to false -> see JBDC docs
 
-            // QUERY RESULTS
-            preparedStatement = c.prepareStatement(query);
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
-            resultSet = preparedStatement.executeQuery();
-
-            // FUNCTION
-            if (resultSet.next()) {
-                String UserID = resultSet.getString("user_id");
-                String Email = resultSet.getString("email");
-                String Admin = resultSet.getString("admin");
-                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", UserID, Email, Admin);
-                return true;
-            }
-            // CLOSE CONNECTION
-            resultSet.close();
-            preparedStatement.close();
-            c.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            return false;
-        }
-        System.out.println("Operation adminLogin done successfully");
-        return false;
-    }
 
     }
 

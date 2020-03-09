@@ -8,22 +8,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import sample.User;
-import sample.model.Admin;
-import sample.model.DBQueries;
-import sample.model.Movie;
-import sample.model.ViewSwitcher;
+import sample.model.*;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-public class adminSearchUserController {
-        ViewSwitcher view = new ViewSwitcher();
-        DBQueries queries = new DBQueries();
+public class adminSearchUserController{
+    ViewSwitcher view = new ViewSwitcher();
+        SQLite queries = new SQLite();
 
         @FXML
         private ResourceBundle resources;
@@ -49,31 +46,32 @@ public class adminSearchUserController {
     private TextField searchField;
 
     @FXML
-    private TextField uidField;
+    private TextField userIDField;
 
     @FXML
-    private TextField emailText;
+    private TextField emailField;
 
     @FXML
-    private TextField firstnameText;
+    private TextField firstnameField;
 
     @FXML
-    private TextField lastnameText;
+    private TextField lastnameField;
 
     @FXML
-    private TextField passwordText;
-
-    ObservableList<Integer> genderData = (ObservableList<Integer>) FXCollections.observableArrayList(0, 1);
-    ObservableList<Integer> adminData = (ObservableList<Integer>) FXCollections.observableArrayList(0, 1);
+    private TextField passwordField;
 
     @FXML
-    private ComboBox<Integer> genderBox;
+    private TextField genderField;
 
     @FXML
-    private ComboBox<Integer> adminBox;
+    private TextField adminField;
 
     @FXML
     private Button updateButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button addButton;
 
         @FXML
         void loadLogout(ActionEvent event) {
@@ -106,6 +104,103 @@ public class adminSearchUserController {
             view.adminWatchlist();
         }
 
+        // SEARCH
+        @FXML
+        void search(KeyEvent event) {
+            // Wrap the ObservableList in a FilteredList (initially display all data).
+            FilteredList<User> filteredData = new FilteredList<>(users, e -> true);
+            // 2. Set the filter Predicate whenever the filter changes.
+            searchField.setOnKeyReleased(e -> {
+                searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+                    filteredData.setPredicate((Predicate<? super User>) user -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
+                        if (user.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } if (user.getPassword().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches last name.
+                        }
+                        if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        } // Does not match.
+                        return user.getLastName().toLowerCase().contains(lowerCaseFilter);
+                    });
+                });
+                SortedList<User> sortedData = new SortedList<>(filteredData);
+                sortedData.comparatorProperty().bind(userTable.comparatorProperty());
+                userTable.setItems(sortedData);
+            });
+        }
+
+        // CRUD
+        @FXML
+        void viewDetails(MouseEvent event) {
+            User user= userTable.getSelectionModel().getSelectedItem();
+            String userID = String.valueOf(user.getUserID());
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+            String email = user.getEmail();
+            String password = user.getPassword();
+            String gender = String.valueOf(user.getGender());
+            String admin = String.valueOf(user.getAdmin());
+            userIDField.setText(userID);
+            firstnameField.setText(firstName);
+            lastnameField.setText(lastName);
+            emailField.setText(email);
+            passwordField.setText(password);
+            genderField.setText(gender);
+            adminField.setText(admin);
+        }
+
+    @FXML
+    void addRecord(ActionEvent event) {
+        User user = new User();
+        Admin admin = new Admin();
+        user.userID = Integer.parseInt(userIDField.getText());
+        user.firstName = firstnameField.getText();
+        user.lastName = lastnameField.getText();
+        user.email =  emailField.getText();
+        user.password = passwordField.getText();
+        user.admin = Integer.parseInt(adminField.getText());
+        user.gender = Integer.parseInt(genderField.getText());
+        admin.addUser( user.email, user.firstName, user.lastName, user.password, user.gender, user.admin);
+        userTable.setItems(queries.getUser());
+        users = queries.getUser();
+        userTable.setItems(users);
+    }
+
+    @FXML
+    void updateRecord(ActionEvent event) {
+        Admin admin = new Admin();
+        User user = new User();
+
+        user.userID = Integer.parseInt(userIDField.getText());
+        user.firstName = firstnameField.getText();
+        user.lastName = lastnameField.getText();
+        user.email =  emailField.getText();
+        user.password = passwordField.getText();
+        user.admin = Integer.parseInt(adminField.getText());
+        user.gender = Integer.parseInt(genderField.getText());
+        admin.updateUser( user.userID, user.email, user.firstName, user.lastName, user.password, user.gender, user.admin);
+        userTable.setItems(queries.getUser());
+        users = queries.getUser();
+        userTable.setItems(users);
+    }
+
+    @FXML
+    void deleteRecord(ActionEvent event) {
+        Admin admin = new Admin();
+        int userID = Integer.parseInt(userIDField.getText());
+        admin.deleteUser(userID);
+        users.clear();
+        userTable.setItems(queries.getUser());
+        users = queries.getUser();
+        userTable.setItems(users);
+}
+
         // USER TABLE
         private ObservableList<User> user;
         @FXML
@@ -129,9 +224,7 @@ public class adminSearchUserController {
 
         @FXML
         void initialize() {
-            genderBox.setItems(genderData);
-            adminBox.setItems(adminData);
-
+            User user = new User();
 
             colIDU.setCellValueFactory(new PropertyValueFactory<>("userID"));
             colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -140,85 +233,11 @@ public class adminSearchUserController {
             colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
             colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
             colAdmin.setCellValueFactory(new PropertyValueFactory<>("admin"));
-            userTable.setItems(queries.getUser());
             users = queries.getUser();
-userTable.setItems(users);
+            userTable.setItems(users);
 
-            updateButton.setOnAction(e -> {
-                    if (signUp()) {
-                        userTable.refresh();
-                    } else {
-                        System.out.print(("Error login in user")); // TODO add message for the user
-                    }
-                });
-            // Wrap the ObservableList in a FilteredList (initially display all data).
-            FilteredList<User> filteredData = new FilteredList<>(users, e -> true);
 
-            // 2. Set the filter Predicate whenever the filter changes.
-            searchField.setOnKeyReleased(e -> {
-                searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-                    filteredData.setPredicate((Predicate<? super User>) user -> {
-                        if (newValue == null || newValue.isEmpty()) {
-                            return true;
-                        }
-                        // Compare first name and last name of every person with filter text.
-                        String lowerCaseFilter = newValue.toLowerCase();
-                        if (user.getEmail().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
-                        } if (user.getPassword().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches last name.
-                        }
-                        if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)){
-                            return true;
-                        } if (user.getLastName().toLowerCase().contains(lowerCaseFilter)){
-                            return true;
-                        }
-                        else {
-                            return false; // Does not match.
-                        }
-                    });
-                });
-                SortedList<User> sortedData = new SortedList<>(filteredData);
-                sortedData.comparatorProperty().bind(userTable.comparatorProperty());
-                userTable.setItems(sortedData);
-            });
-            }
 
-            public boolean signUp() {
-                User user;
-                user = new User();
-                Connection conn;
-                user.email = emailText.getText().trim();
-                user.firstName = firstnameText.getText().trim();
-                user.lastName = lastnameText.getText().trim();
-                user.password = passwordText.getText().trim();
-
-                if (user.email.isEmpty() || user.firstName.isEmpty() || user.password.isEmpty() || user.lastName.isEmpty() || user.password.isEmpty()) {
-                    return false;
-                } else {
-
-                    String saveMemberInfo = "INSERT INTO user (email, password, first_name, last_name, gender, admin) VALUES (?,?,?,?,?,?)"; //Add gender and admin when done
-
-                    try {
-                        String url = "jdbc:sqlite:db/pfm.db"; // db parameters
-                        conn = DriverManager.getConnection(url);// create a connection to the database
-                        PreparedStatement stmt = conn.prepareStatement(saveMemberInfo); //we use a prepared statement to input the values
-                        stmt.setString(1, user.email); //this line sets a value for the first question mark in string saveMemberInfo
-                        stmt.setString(2, user.password); //this line sets a value for the first question mark in string saveMemberInfo
-                        stmt.setString(3, user.firstName); //this line sets a value for the first question mark in string saveMemberInfo
-                        stmt.setString(4, user.lastName); //this line sets a value for the first question mark in string saveMemberInfo
-                        stmt.setInt(5, 0); //this line sets a value for the first question mark in string saveMemberInfo
-                        stmt.setInt(6, 0); //this line sets a value for the first question mark in string saveMemberInfo
-                        stmt.execute();
-                        conn.close();
-                        stmt.close();
-                    } catch (Exception e) {
-                        System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                        return false;
-                    }
-                }
-                return true;
-            }
-            }
-
+        }
+}
 

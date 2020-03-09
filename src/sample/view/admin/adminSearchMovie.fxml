@@ -23,7 +23,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Text>
-                <Button fx:id="searchMovieButton" mnemonicParsing="false" onAction="#loadSearchMovie" prefHeight="70.0" prefWidth="240.0" text="Search Movies">
+                <Button fx:id="searchMovieButton" defaultButton="true" mnemonicParsing="false" onAction="#loadSearchMovie" prefHeight="70.0" prefWidth="240.0" text="Search Movies">
                <VBox.margin>
                   <Insets bottom="1.0" top="30.0" />
                </VBox.margin></Button>
@@ -39,10 +39,29 @@
                <VBox.margin>
                   <Insets bottom="1.0" top="1.0" />
                </VBox.margin></Button>
-                <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#loadLogout" prefHeight="70.0" prefWidth="241.0" text="Logout">
+                <Button fx:id="logoutButton" cancelButton="true" mnemonicParsing="false" onAction="#loadLogout" prefHeight="70.0" prefWidth="241.0" text="Logout">
                <VBox.margin>
                   <Insets bottom="1.0" top="1.0" />
                </VBox.margin></Button>
+            </children>
+        </VBox>
+        <VBox layoutX="1067.0" layoutY="687.0" prefHeight="70.0" prefWidth="149.0">
+            <children>
+                <Button fx:id="addButton" mnemonicParsing="false" onAction="#addRecord" prefHeight="23.0" prefWidth="154.0" text="Add New Record">
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateRecord" prefHeight="23.0" prefWidth="151.0" text="Update Current Record">
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteRecord" prefHeight="23.0" prefWidth="154.0" text="Delete Current Record">
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+                </Button>
             </children>
         </VBox>
         <Text layoutX="588.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Search Movie">
@@ -61,30 +80,33 @@
                 <TableColumn fx:id="colRating" minWidth="0.0" prefWidth="47.4666748046875" text="Rating" />
                 <TableColumn fx:id="colVotes" minWidth="0.0" prefWidth="62.666748046875" text="# Votes" />
                 <TableColumn fx:id="colAdult" minWidth="0.0" prefWidth="49.3331298828125" text="Adult" />
-
-            </columns>
+                  </columns>
         </TableView>
       <Text fill="WHITE" layoutX="256.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movies">
          <font>
             <Font size="30.0" />
          </font>
       </Text>
-      <TextField fx:id="searchField" layoutX="1047.0" layoutY="22.0" promptText="Search all columns" />
-      <HBox layoutX="260.0" layoutY="706.0" prefHeight="30.0" prefWidth="687.0">
+      <TextField fx:id="searchField" layoutX="1047.0" layoutY="22.0" onKeyReleased="#search" promptText="Search all columns" />
+      <HBox layoutX="256.0" layoutY="690.0" prefHeight="30.0" prefWidth="786.0">
          <children>
             <TextField fx:id="movieIDField" prefHeight="23.0" prefWidth="67.0" promptText="Movie ID" />
-            <TextField fx:id="titleField" prefHeight="23.0" prefWidth="67.0" promptText="Title" />
-            <TextField fx:id="genreField" prefHeight="23.0" prefWidth="67.0" promptText="Genre" />
+            <TextField fx:id="titleField" prefHeight="23.0" prefWidth="139.0" promptText="Title" />
+            <TextField fx:id="genreField" prefHeight="23.0" prefWidth="81.0" promptText="Genre" />
             <TextField fx:id="durationField" prefHeight="23.0" prefWidth="67.0" promptText="Duration" />
             <TextField fx:id="yearField" prefHeight="23.0" prefWidth="67.0" promptText="Year" />
-            <TextField fx:id="writerField" prefHeight="23.0" prefWidth="67.0" promptText="Writer" />
-            <TextField fx:id="directorField" prefHeight="23.0" prefWidth="67.0" promptText="Director" />
+            <TextField fx:id="writerField" prefHeight="23.0" prefWidth="92.0" promptText="Writer" />
+            <TextField fx:id="directorField" prefHeight="23.0" prefWidth="117.0" promptText="Director" />
             <TextField fx:id="ratingField" prefHeight="23.0" prefWidth="67.0" promptText="Rating" />
             <TextField fx:id="votesField" prefHeight="23.0" prefWidth="67.0" promptText="# Votes" />
-            <TextField fx:id="adultField" prefHeight="23.0" prefWidth="67.0" promptText="# Votes" text="Adult" />
+            <TextField fx:id="adultField" prefHeight="23.0" prefWidth="67.0" promptText="Adult" />
          </children>
       </HBox>
+        <Text fill="WHITE" layoutX="252.0" layoutY="675.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify records below">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Text>
       <Text fx:id="error" fill="RED" layoutX="264.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Button fx:id="addButton" layoutX="974.0" layoutY="709.0" mnemonicParsing="false" text="Add" />
     </children>
 </AnchorPane>

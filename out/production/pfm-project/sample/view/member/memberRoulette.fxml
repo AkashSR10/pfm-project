@@ -43,6 +43,20 @@
                 <Font size="30.0" />
             </font>
         </Text>
-      <ComboBox fx:id="comboBox" layoutX="297.0" layoutY="69.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboGenre" layoutX="256.0" layoutY="72.0" prefWidth="150.0" promptText="Genre" />
+      <ComboBox fx:id="comboYear" layoutX="256.0" layoutY="119.0" prefWidth="150.0" promptText="&gt;Year" />
+      <ComboBox fx:id="comboRating" layoutX="256.0" layoutY="175.0" prefWidth="150.0" promptText="&gt; Rating" />
+      <Button fx:id="spinButton" layoutX="305.0" layoutY="235.0" mnemonicParsing="false" text="Spin" />
+      <Text fx:id="titleText" fill="WHITE" layoutX="727.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Titel" />
+      <Button fx:id="addWatchListButton" layoutX="305.0" layoutY="288.0" mnemonicParsing="false" text="Add to watchlist" />
+      <Text fx:id="movieID" layoutX="1243.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="1.0" />
+         </font>
+      </Text>
+      <Text fx:id="titleText1" fill="WHITE" layoutX="737.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Titel" />
+      <Text fx:id="titleText2" fill="WHITE" layoutX="737.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Titel" />
+      <Text fx:id="titleText3" fill="WHITE" layoutX="727.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Titel" />
+      <Text fx:id="titleText4" fill="WHITE" layoutX="727.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Titel" />
     </children>
 </AnchorPane>

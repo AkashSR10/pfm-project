@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import sample.model.Admin;
-import sample.model.DBQueries;
 import sample.model.ViewSwitcher;
 
 import java.net.URL;
@@ -41,11 +40,6 @@ public class adminWatchlistController {
                 view.backtoLogin();
             }
 
-            @FXML
-            void loadRoulette(ActionEvent event) {
-                rouletteButton.getScene().getWindow().hide();
-                view.adminRoulette();
-            }
 
             @FXML
             void loadSearchMovie(ActionEvent event) {

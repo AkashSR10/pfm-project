@@ -53,10 +53,6 @@ public class ViewSwitcher {
         setView("/sample/view/admin/adminSearchMovie.fxml");
     }
 
-    public void adminRoulette(){
-        setView("/sample/view/admin/adminRoulette.fxml");
-    }
-
     public void adminWatchlist(){
         setView("/sample/view/admin/adminWatchlist.fxml");
     }

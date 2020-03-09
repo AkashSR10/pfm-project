@@ -2,6 +2,8 @@ package sample.controller.login;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,13 +11,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import sample.User;
-import sample.model.DBQueries;
-import sample.model.Login;
 import sample.model.SQLite;
 import sample.model.ViewSwitcher;
 
 public class loginController {
-
+    @FXML
+    private JFXTextField test;
     @FXML
     private ResourceBundle resources;
 

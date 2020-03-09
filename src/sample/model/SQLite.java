@@ -5,12 +5,11 @@ import javafx.collections.ObservableList;
 import sample.User;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class SQLite {
     ResultSet rs = null;                                                     // Declare resultset
     PreparedStatement stmt = null;
-
+    public int userID = 0;
     /**
      * Connect to a sample database
      */
@@ -30,24 +29,6 @@ public class SQLite {
     }
 
     /**
-     * Delete
-     */
-
-    public void delete(int id) {
-        String sql = "DELETE FROM user where user_id = ?";
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            // set the corresponding param
-            pstmt.setInt(1, id);
-            //update
-            pstmt.executeUpdate();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    /**
      * Member Login
      */
 
@@ -61,10 +42,10 @@ public class SQLite {
             rs = stmt.executeQuery();
             // FUNCTION
             if (rs.next()) {
-                String UserID = rs.getString("user_id");
+                userID = Integer.parseInt(rs.getString("user_id"));
                 String Email = rs.getString("email");
                 String Admin = rs.getString("admin");
-                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", UserID, Email, Admin);
+                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", userID, Email, Admin);
                 return true;
             }
             // CLOSE CONNECTION
@@ -92,10 +73,10 @@ public class SQLite {
             rs = stmt.executeQuery();
             // FUNCTION
             if (rs.next()) {
-                String UserID = rs.getString("user_id");
+                userID = Integer.parseInt(rs.getString("user_id"));
                 String Email = rs.getString("email");
                 String Admin = rs.getString("admin");
-                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", UserID, Email, Admin);
+                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", userID, Email, Admin);
                 return true;
             }
             // CLOSE CONNECTION
@@ -216,6 +197,117 @@ public class SQLite {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return movies;
+    }
+
+    public ObservableList<Movie> getGenre() {
+        ObservableList<Movie> movies = FXCollections.observableArrayList();
+        String sql = "select * from movie";  // Set QUERY
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            // QUERY RESULTS
+            rs = stmt.executeQuery();                                                   // Set autocommit to false -> see JBDC docs
+
+            // FUNCTION
+            while (rs.next()) {
+                movies.add(new Movie(
+                        rs.getInt("movie_id"),
+                        rs.getString("title"),
+                        rs.getString("genre"),
+                        rs.getInt("duration"),
+                        rs.getInt("year"),
+                        rs.getString("writer"),
+                        rs.getString("director"),
+                        rs.getInt("rating"),
+                        rs.getInt("num_rating"),
+                        rs.getInt("adult")
+                ));
+            }
+            // CLOSE CONNECTION
+            rs.close();
+            stmt.close();
+            conn.close();
+            return movies;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return movies;
+    }
+
+    public Movie rouletteMovie(Movie rouletteMovie) {
+        String sql = "select * from movie ORDER BY RANDOM () LIMIT 1";  // Set QUERY
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            // QUERY RESULTS
+            rs = stmt.executeQuery();                                                   // Set autocommit to false -> see JBDC docs
+            // FUNCTION
+            while (rs.next()) {
+                rouletteMovie =(new Movie(
+                        rs.getInt("movie_id"),
+                        rs.getString("title"),
+                        rs.getString("genre"),
+                        rs.getInt("duration"),
+                        rs.getInt("year"),
+                        rs.getString("writer"),
+                        rs.getString("director"),
+                        rs.getInt("rating"),
+                        rs.getInt("num_rating"),
+                        rs.getInt("adult")
+                ));
+            }
+            // CLOSE CONNECTION
+            rs.close();
+            stmt.close();
+            conn.close();
+            return rouletteMovie;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return rouletteMovie;
+    }
+
+    public Integer movieID = 0;
+   public String title = null;
+  public  String genre = null;
+   public Integer duration = 0;
+   public Integer year = 0;
+   public String writer = null;
+  public   String director = null;
+  public   Integer rating = 0;
+  public   Integer numRating = 0;
+  public   Integer adult = 0;
+    public boolean rouletteMovie(String genreInput, int yearInput, int ratingInput) {
+        String sql = "select * from movie where genre = ? and year > ? and rating > ? ORDER BY RANDOM () LIMIT 1";
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, genreInput);
+            stmt.setInt(2, yearInput);
+            stmt.setInt(3, ratingInput);
+            rs = stmt.executeQuery();
+            // FUNCTION
+            while (rs.next()) {
+                movieID = rs.getInt("movie_id");
+                    title =    rs.getString("title");
+                   genre =     rs.getString("genre");
+                   duration =     rs.getInt("duration");
+                   year =     rs.getInt("year");
+                    writer =    rs.getString("writer");
+                    director =    rs.getString("director");
+                    rating =    rs.getInt("rating");
+                      numRating =  rs.getInt("num_rating");
+                      adult =  rs.getInt("adult");
+                return true;
+            }
+            // CLOSE CONNECTION
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        title = "no found";
+        System.out.println("Operation adminLogin done successfully");
+        return false;
     }
 
 }

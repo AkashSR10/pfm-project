@@ -72,11 +72,7 @@ public class adminSearchMovieController {
         logoutButton.getScene().getWindow().hide();
         view.backtoLogin();
     }
-    @FXML
-    void loadRoulette(ActionEvent event) {
-        rouletteButton.getScene().getWindow().hide();
-        view.adminRoulette();
-    }
+
     @FXML
     void loadSearchMovie(ActionEvent event) {
         searchMovieButton.getScene().getWindow().hide();

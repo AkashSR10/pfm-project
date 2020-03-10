@@ -1,27 +1,24 @@
 package sample.controller.login;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.text.Text;
+import sample.User;
+import sample.model.ViewSwitcher;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.text.Text;
-import sample.User;
-import sample.model.ViewSwitcher;
-
 public class signupController {
-    ViewSwitcher scene = new ViewSwitcher();
+    // Declare Components
+
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -56,6 +53,8 @@ public class signupController {
     @FXML
     private Text error;
 
+    // ViewSwitch Functions
+    ViewSwitcher scene = new ViewSwitcher();
 
     @FXML
     void loadLogin(ActionEvent event) {
@@ -69,7 +68,7 @@ public class signupController {
         signupButton.setOnAction(event -> {
             if (signUp()) {
                 signupButton.getScene().getWindow().hide();
-                scene.memberMenu();
+                scene.memberSearchMovie();
             } else {
                 System.out.print(("Error login in user")); // TODO add message for the user
             }
@@ -88,7 +87,7 @@ public class signupController {
         user.gender = femaleRadio.isSelected() ? 1 : 0;
 
         if (user.email.isEmpty() || user.firstName.isEmpty() || user.password.isEmpty() || user.lastName.isEmpty() || user.password.isEmpty()) {
-            error.setText("One or multiple fields are not filled in");
+            error.setText("One or multiple fields are not filled in correctly");
             return false;
         } else {
 

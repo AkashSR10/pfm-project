@@ -1,72 +1,75 @@
 package sample.controller.admin;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.util.ResourceBundle;
-import java.util.function.Predicate;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import sample.User;
 import sample.model.*;
 
-public class adminSearchMovieController {
-    SQLite queries = new SQLite();
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
+public class adminSearchMovieController extends User {
+    // Declare Components
+    @FXML
+    private JFXButton rouletteButton;
+    @FXML
+    private JFXButton watchlistButton;
+    @FXML
+    private JFXButton searchMovieButton;
+    @FXML
+    private JFXButton searchUserButton;
+    @FXML
+    private JFXButton logoutButton;
+    @FXML
+    private JFXButton addButton;
+    @FXML
+    private JFXButton updateButton;
+    @FXML
+    private JFXButton deleteButton;
+    @FXML
+    private JFXTextField movieIDField;
+    @FXML
+    private JFXTextField titleField;
+    @FXML
+    private JFXTextField genreField;
+    @FXML
+    private JFXTextField durationField;
+    @FXML
+    private JFXTextField yearField;
+    @FXML
+    private JFXTextField writerField;
+    @FXML
+    private JFXTextField directorField;
+    @FXML
+    private JFXTextField ratingField;
+    @FXML
+    private JFXTextField votesField;
+    @FXML
+    private Text error;
+    @FXML
+    private JFXTextField searchField;
     @FXML
     private ResourceBundle resources;
     @FXML
     private URL location;
     @FXML
-    private Button searchMovieButton;
-    @FXML
-    private Button searchUserButton;
-    @FXML
-    private Button watchlistButton;
-    @FXML
-    private Button rouletteButton;
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private TextField searchField;
-    @FXML
-    private TextField movieIDField;
-    @FXML
-    private TextField titleField;
-    @FXML
-    private TextField genreField;
-    @FXML
-    private TextField durationField;
-    @FXML
-    private TextField yearField;
-    @FXML
-    private TextField writerField;
-    @FXML
-    private TextField directorField;
-    @FXML
-    private TextField ratingField;
-    @FXML
-    private TextField votesField;
-    @FXML
-    private TextField adultField;
-    @FXML
-    private Button addButton;
-    @FXML
-    private Text error;
+    private JFXButton addToWatchlistButton;
 
-    // VIEW FUNCTIONS
+    // ViewSwitch Functions
     ViewSwitcher view = new ViewSwitcher();
+
     @FXML
     void loadLogout(ActionEvent event) {
         logoutButton.getScene().getWindow().hide();
@@ -76,22 +79,31 @@ public class adminSearchMovieController {
     @FXML
     void loadSearchMovie(ActionEvent event) {
         searchMovieButton.getScene().getWindow().hide();
-        view.adminMenu();
+        view.adminSearchMovie();
     }
+
     @FXML
     void loadSearchUser(ActionEvent event) {
         searchUserButton.getScene().getWindow().hide();
         view.adminSearchUser();
     }
+
     @FXML
     void loadWatchlist(ActionEvent event) {
         watchlistButton.getScene().getWindow().hide();
         view.adminWatchlist();
     }
 
-    // SEARCH
+    @FXML
+    void loadRoulette(ActionEvent event) {
+        rouletteButton.getScene().getWindow().hide();
+        view.adminRoulette();
+    }
+
+    // Search Function
     @FXML
     void search(KeyEvent event) {
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<Movie> filteredData = new FilteredList<>(movies, e -> true);
 
         // 2. Set the filter Predicate whenever the filter changes.
@@ -101,15 +113,17 @@ public class adminSearchMovieController {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
-                    // Compare first name and last name of every person with filter text.
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if (movie.getTitle().toLowerCase().contains(lowerCaseFilter) ) {
-                        return true; // Filter matches first name.
-                    } if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; // Filter matches last name.
-                    } if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)){
+                    if (movie.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)){
+                    }
+                    if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     } else {
                         return false; // Does not match.
@@ -120,33 +134,40 @@ public class adminSearchMovieController {
             sortedData.comparatorProperty().bind(movieTable.comparatorProperty());
             movieTable.setItems(sortedData);
         });
-
         SortedList<Movie> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(movieTable.comparatorProperty());
         movieTable.setItems(sortedData);
-    };
+    }
 
-    //CRUD
+    ;
+
+    // CRUD Functions
+    SQLite queries = new SQLite();
 
     @FXML
     void addRecord(ActionEvent event) {
-        Movie movie = new Movie();
-        Admin admin = new Admin();
-        movie.movieID = Integer.parseInt(movieIDField.getText());
-        movie.title = titleField.getText();
-        movie.genre = genreField.getText();
-        movie.year = Integer.parseInt(yearField.getText());
-        movie.duration = Integer.parseInt(durationField.getText());
-        movie.director = directorField.getText();
-        movie.writer = writerField.getText();
-        movie.adult = Integer.parseInt(adultField.getText());
-        movie.year = Integer.parseInt(yearField.getText());
-        movie.rating = Integer.parseInt(ratingField.getText());
-        movie.numRating = Integer.parseInt(votesField.getText());
-        admin.addMovie(movie.title, movie.genre, movie.duration, movie.year, movie.writer, movie.director, movie.rating, movie.numRating, movie.adult);
-        movieTable.setItems(queries.getMovie());
-        movies = queries.getMovie();
-        movieTable.setItems(movies);
+        try {
+            Movie movie = new Movie();
+            Admin admin = new Admin();
+            movie.movieID = Integer.parseInt(movieIDField.getText());
+            movie.title = titleField.getText();
+            movie.genre = genreField.getText();
+            movie.year = Integer.parseInt(yearField.getText());
+            movie.duration = Integer.parseInt(durationField.getText());
+            movie.director = directorField.getText();
+            movie.writer = writerField.getText();
+            movie.year = Integer.parseInt(yearField.getText());
+            movie.rating = Integer.parseInt(ratingField.getText());
+            movie.numRating = Integer.parseInt(votesField.getText());
+            admin.addMovie(movie.title, movie.genre, movie.duration, movie.year, movie.writer, movie.director, movie.rating, movie.numRating);
+            movieTable.setItems(queries.getMovie());
+            movies = queries.getMovie();
+            movieTable.setItems(movies);
+            error.setText("Record added succesfully");
+        } catch (Error e) {
+            error.setText("Please check if you");
+
+        }
     }
 
     @FXML
@@ -156,11 +177,12 @@ public class adminSearchMovieController {
         int movieID = Integer.parseInt(movieIDField.getText());
         admin.deleteMovie(movieID);
         movies.clear();
-       movieTable.setItems(queries.getMovie());
+        movieTable.setItems(queries.getMovie());
         movies = queries.getMovie();
         movieTable.setItems(movies);
-    }
+        error.setText("Record deleted succesfully");
 
+    }
 
     @FXML
     void updateRecord(ActionEvent event) {
@@ -173,17 +195,28 @@ public class adminSearchMovieController {
         movie.duration = Integer.parseInt(durationField.getText());
         movie.director = directorField.getText();
         movie.writer = writerField.getText();
-        movie.adult = Integer.parseInt(adultField.getText());
         movie.year = Integer.parseInt(yearField.getText());
         movie.rating = Integer.parseInt(ratingField.getText());
         movie.numRating = Integer.parseInt(votesField.getText());
-        admin.updateMovie(movie.movieID, movie.title, movie.genre, movie.duration, movie.year, movie.writer, movie.director, movie.rating, movie.numRating, movie.adult);
+        admin.updateMovie(movie.movieID, movie.title, movie.genre, movie.duration, movie.year, movie.writer, movie.director, movie.rating, movie.numRating);
         movieTable.setItems(queries.getMovie());
         movies = queries.getMovie();
         movieTable.setItems(movies);
+        error.setText("Record updated succesfully");
+
     }
 
-    //MOVIE TABLE
+    // Add to Watchlist
+
+    @FXML
+    void addToWatchlist(ActionEvent event) {
+        Member member = new Member();
+        int movieID = Integer.parseInt(movieIDField.getText());
+        member.addMovieWatchlist(userID, movieID);
+
+    }
+
+    // Declare components Movie Table
     @FXML
     private TableView<Movie> movieTable;
     @FXML
@@ -204,14 +237,12 @@ public class adminSearchMovieController {
     private TableColumn<Movie, Integer> colRating;
     @FXML
     private TableColumn<Movie, Integer> colVotes;
-    @FXML
-    private TableColumn<Movie, Integer> colAdult;
     private ObservableList<Movie> movies = FXCollections.observableArrayList();
 
 
     @FXML
     void initialize() {
-        //MOVIE TABLE
+        //Set cells to corresponding value for the Observable List
         colID.setCellValueFactory(new PropertyValueFactory<>("movieID"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -221,14 +252,12 @@ public class adminSearchMovieController {
         colDirector.setCellValueFactory(new PropertyValueFactory<>("director"));
         colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         colVotes.setCellValueFactory(new PropertyValueFactory<>("numRating"));
-        colAdult.setCellValueFactory(new PropertyValueFactory<>("adult"));
         movies = queries.getMovie();
         movieTable.setItems(movies);
 
-        //SHOW VALUES AFTER SELECTING A MOVIE
+        // Show values in text fields below ... modify records
         movieTable.setOnMouseClicked(e -> {
-            Movie movie = (Movie)movieTable.getSelectionModel().getSelectedItem();
-            System.out.println(movie.getMovieID());
+            Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
             String movieID = String.valueOf(movie.getMovieID());
             String title = movie.getTitle();
             String genre = movie.getGenre();
@@ -238,7 +267,6 @@ public class adminSearchMovieController {
             String director = movie.getDirector();
             String rating = String.valueOf(movie.getRating());
             String votes = String.valueOf(movie.getNumRating());
-            String adult = String.valueOf(movie.getAdult());
 
             movieIDField.setText(movieID);
             titleField.setText(title);
@@ -249,7 +277,6 @@ public class adminSearchMovieController {
             directorField.setText(director);
             ratingField.setText(rating);
             votesField.setText(votes);
-            adultField.setText(adult);
         });
 
     }

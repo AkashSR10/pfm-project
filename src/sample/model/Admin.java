@@ -1,9 +1,12 @@
 package sample.model;
+
 import sample.User;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class Admin extends User {
-    User user = new User();
 
     public static void connectDB() {
         Connection c = null;
@@ -63,7 +66,7 @@ public class Admin extends User {
 
             //add for admin
             stmt.executeUpdate();
-            System.out.println("UserID " + userID + " has been updated");
+            System.out.println("User" + email + " has been added");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
@@ -137,12 +140,12 @@ public class Admin extends User {
         }
     }
 
-    public void updateMovie(int movieID, String title, String genre, int duration, int year, String writer, String director, int rating, int numRating, int adult) {
+    public void updateMovie(int movieID, String title, String genre, int duration, int year, String writer, String director, int rating, int numRating) {
 
         PreparedStatement stmt = null;
         Connection conn = null;
 
-        String saveMemberInfo = "UPDATE movie set title = ?, genre = ?, duration = ?, year = ?, writer = ?, director = ?, rating = ?, num_rating = ?, adult = ? where movie_id = " + movieID + "";
+        String saveMemberInfo = "UPDATE movie set title = ?, genre = ?, duration = ?, year = ?, writer = ?, director = ?, rating = ?, num_rating = ? where movie_id = " + movieID + "";
         try {
             String url = "jdbc:sqlite:db/pfm.db"; // db parameters
             conn = DriverManager.getConnection(url);// create a connection to the database
@@ -155,11 +158,10 @@ public class Admin extends User {
             stmt.setString(6, director); //this line sets a value for the first question mark in string saveMemberInfo
             stmt.setInt(7, rating); //this line sets a value for the first question mark in string saveMemberInfo
             stmt.setInt(8, numRating); //this line sets a value for the first question mark in string saveMemberInfo
-            stmt.setInt(9, adult); //this line sets a value for the first question mark in string saveMemberInfo
 
             //add for admin
             stmt.executeUpdate();
-            System.out.println("UserID " + userID + " has been updated");
+            System.out.println("MovieID " + movieID + " has been updated");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
@@ -173,12 +175,12 @@ public class Admin extends User {
         }
     }
 
-    public void addMovie( String title, String genre, int duration, int year, String writer, String director, int rating, int numRating, int adult) {
+    public void addMovie(String title, String genre, int duration, int year, String writer, String director, int rating, int numRating) {
 
         PreparedStatement stmt = null;
         Connection conn = null;
 
-        String saveMemberInfo = "INSERT INTO movie (title, genre, duration, year, writer, director, rating, num_rating, adult) VALUES (?,?,?,?,?,?,?,?,?)";
+        String saveMemberInfo = "INSERT INTO movie (title, genre, duration, year, writer, director, rating, num_rating) VALUES (?,?,?,?,?,?,?,?)";
         try {
             String url = "jdbc:sqlite:db/pfm.db"; // db parameters
             conn = DriverManager.getConnection(url);// create a connection to the database
@@ -191,10 +193,10 @@ public class Admin extends User {
             stmt.setString(6, director); //this line sets a value for the first question mark in string saveMemberInfo
             stmt.setInt(7, rating); //this line sets a value for the first question mark in string saveMemberInfo
             stmt.setInt(8, numRating); //this line sets a value for the first question mark in string saveMemberInfo
-            stmt.setInt(9, adult); //this line sets a value for the first question mark in string saveMemberInfo
 
             //add for admin
             stmt.executeUpdate();
+            System.out.println("MovieID " + title + " has been updated");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
@@ -207,7 +209,6 @@ public class Admin extends User {
 
         }
     }
-
 
 
 }

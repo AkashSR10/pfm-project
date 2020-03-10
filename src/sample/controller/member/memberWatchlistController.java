@@ -1,7 +1,11 @@
 package sample.controller.member;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,10 +13,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import sample.model.Member;
 import sample.model.Movie;
 import sample.model.SQLite;
 import sample.model.ViewSwitcher;
+
+import java.util.function.Predicate;
 
 public class memberWatchlistController {
     ViewSwitcher view = new ViewSwitcher();
@@ -22,6 +29,9 @@ public class memberWatchlistController {
 
     @FXML
     private Button watchlistButton;
+
+    @FXML
+    private JFXButton addWatchlistButton;
 
     @FXML
     private Button rouletteButton;
@@ -57,6 +67,8 @@ public class memberWatchlistController {
 
     @FXML
     private TextField adultField;
+    @FXML
+    private JFXTextField searchField;
 
     @FXML
     void deleteFromWatchlist(ActionEvent event) {
@@ -87,7 +99,7 @@ public class memberWatchlistController {
     @FXML
     void loadSearchMovie(ActionEvent event) {
         searchMovieButton.getScene().getWindow().hide();
-        view.memberMenu();
+        view.memberSearchMovie();
     }
 
     @FXML
@@ -95,6 +107,47 @@ public class memberWatchlistController {
         watchlistButton.getScene().getWindow().hide();
         view.memberWatchlist();
     }
+
+    // SEARCH FUNCTION
+    @FXML
+    void search(KeyEvent event) {
+        FilteredList<Movie> filteredData = new FilteredList<>(movies, e -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        searchField.setOnKeyReleased(e -> {
+            searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+                filteredData.setPredicate((Predicate<? super Movie>) movie -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    // Compare first name and last name of every person with filter text.
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (movie.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches first name.
+                    }
+                    if (movie.getGenre().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches last name.
+                    }
+                    if (movie.getWriter().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    if (movie.getDirector().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else {
+                        return false; // Does not match.
+                    }
+                });
+            });
+            SortedList<Movie> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(movieTable.comparatorProperty());
+            movieTable.setItems(sortedData);
+        });
+        SortedList<Movie> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(movieTable.comparatorProperty());
+        movieTable.setItems(sortedData);
+    }
+
+    ;
 
     //MOVIE TABLE
     @FXML
@@ -117,8 +170,7 @@ public class memberWatchlistController {
     private TableColumn<Movie, Integer> colRating;
     @FXML
     private TableColumn<Movie, Integer> colVotes;
-    @FXML
-    private TableColumn<Movie, Integer> colAdult;
+
     private ObservableList<Movie> movies = FXCollections.observableArrayList();
 
     @FXML
@@ -135,13 +187,11 @@ public class memberWatchlistController {
         colDirector.setCellValueFactory(new PropertyValueFactory<>("director"));
         colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         colVotes.setCellValueFactory(new PropertyValueFactory<>("numRating"));
-        colAdult.setCellValueFactory(new PropertyValueFactory<>("adult"));
         movies = queries.getWatchlist(1);
         movieTable.setItems(movies);
 
         movieTable.setOnMouseClicked(e -> {
             Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
-            System.out.println(movie.getMovieID());
             String movieID = String.valueOf(movie.getMovieID());
             String title = movie.getTitle();
             String genre = movie.getGenre();
@@ -151,7 +201,6 @@ public class memberWatchlistController {
             String director = movie.getDirector();
             String rating = String.valueOf(movie.getRating());
             String votes = String.valueOf(movie.getNumRating());
-            String adult = String.valueOf(movie.getAdult());
 
             movieIDField.setText(movieID);
             titleField.setText(title);
@@ -162,7 +211,6 @@ public class memberWatchlistController {
             directorField.setText(director);
             ratingField.setText(rating);
             votesField.setText(votes);
-            adultField.setText(adult);
         });
     }
 }

@@ -2,10 +2,7 @@ package sample.model;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.Style;
 
 import java.io.IOException;
 
@@ -23,41 +20,46 @@ public class ViewSwitcher {
         Parent root = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new javafx.scene.Scene(root));
+        stage.setTitle("Programming For Managers - Movie Roulette");
         stage.show();
     }
 
     // VIEW LOGIN
-    public void signup(){
+    public void signup() {
         setView("/sample/view/login/signup.fxml");
     }
 
-    public void backtoLogin(){
+    public void backtoLogin() {
         setView("/sample/view/login/login.fxml");
     }
 
     // VIEW MEMBER
-    public void memberMenu(){
-        setView("/sample/view/member/memberSearchMovie.fxml");
-    }
-
-    public void memberRoulette(){
+    public void memberRoulette() {
         setView("/sample/view/member/memberRoulette.fxml");
     }
 
-    public void memberWatchlist(){
+    public void memberSearchMovie() {
+        setView("/sample/view/member/memberSearchMovie.fxml");
+    }
+
+    public void memberWatchlist() {
         setView("/sample/view/member/memberWatchlist.fxml");
     }
 
     // VIEW ADMIN
-    public void adminMenu(){
-        setView("/sample/view/admin/adminSearchMovie.fxml");
+    public void adminRoulette() {
+        setView("/sample/view/admin/adminRoulette.fxml");
     }
 
-    public void adminWatchlist(){
+    public void adminWatchlist() {
         setView("/sample/view/admin/adminWatchlist.fxml");
     }
 
-    public void adminSearchUser(){
+    public void adminSearchMovie() {
+        setView("/sample/view/admin/adminSearchMovie.fxml");
+    }
+
+    public void adminSearchUser() {
         setView("/sample/view/admin/adminSearchUser.fxml");
     }
 

@@ -12,10 +12,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import sample.model.*;
+import sample.model.Member;
+import sample.model.Movie;
+import sample.model.SQLite;
+import sample.model.ViewSwitcher;
 
 import java.util.function.Predicate;
-import java.util.logging.Filter;
 
 public class memberSearchMovieController {
     ViewSwitcher view = new ViewSwitcher();
@@ -87,7 +89,7 @@ public class memberSearchMovieController {
     @FXML
     void loadSearchMovie(ActionEvent event) {
         searchMovieButton.getScene().getWindow().hide();
-        view.memberMenu();
+        view.memberSearchMovie();
     }
 
     @FXML
@@ -184,7 +186,6 @@ public class memberSearchMovieController {
         colDirector.setCellValueFactory(new PropertyValueFactory<>("director"));
         colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         colVotes.setCellValueFactory(new PropertyValueFactory<>("numRating"));
-        colAdult.setCellValueFactory(new PropertyValueFactory<>("adult"));
         movies = queries.getMovie();
         movieTable.setItems(movies);
 
@@ -200,7 +201,6 @@ public class memberSearchMovieController {
             String director = movie.getDirector();
             String rating = String.valueOf(movie.getRating());
             String votes = String.valueOf(movie.getNumRating());
-            String adult = String.valueOf(movie.getAdult());
 
             movieIDField.setText(movieID);
             titleField.setText(title);
@@ -211,7 +211,6 @@ public class memberSearchMovieController {
             directorField.setText(director);
             ratingField.setText(rating);
             votesField.setText(votes);
-            adultField.setText(adult);
         });
     }
 }

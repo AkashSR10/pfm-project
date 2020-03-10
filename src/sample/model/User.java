@@ -1,6 +1,10 @@
 package sample;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import sample.model.Movie;
+
 import java.sql.*;
-import java.lang.String;
 
 public class User {
 
@@ -23,7 +27,8 @@ public class User {
         this.admin = admin;
     }
 
-    public User(){}
+    public User() {
+    }
 
     public int getUserID() {
         return userID;
@@ -82,13 +87,14 @@ public class User {
     }
 
     // FUNCTIONS SQL
-    ResultSet rs = null;                                                     // Declare resultset
-    PreparedStatement stmt = null;
-    public int userIDLOG = 0;
-    /**
-     * Connect to a sample database
-     */
 
+    ResultSet rs = null;
+    PreparedStatement stmt = null;
+
+
+    /**
+     * Connect to a  database
+     */
     public Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:db/pfm.db";
@@ -103,9 +109,12 @@ public class User {
         return conn;
     }
 
-    /**
-     * Member Login
-     */
+    public String Emailz = null;
+
+
+
+    public int userIDMember = 0;
+    public int userIDAdmin = 0;
 
     public boolean memberLogin(String user, String pass) {
         String sql = "select * from user where email = ? and password = ? and admin = 0";
@@ -117,7 +126,7 @@ public class User {
             rs = stmt.executeQuery();
             // FUNCTION
             if (rs.next()) {
-                userID = Integer.parseInt(rs.getString("user_id"));
+                int userID = Integer.parseInt(rs.getString("user_id"));
                 String Email = rs.getString("email");
                 String Admin = rs.getString("admin");
                 System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", userID, Email, Admin);
@@ -134,6 +143,7 @@ public class User {
         System.out.println("Operation adminLogin done successfully");
         return false;
     }
+
     /**
      * Admin Login
      */
@@ -148,22 +158,56 @@ public class User {
             rs = stmt.executeQuery();
             // FUNCTION
             if (rs.next()) {
-                userID = Integer.parseInt(rs.getString("user_id"));
+                userIDAdmin = Integer.parseInt(rs.getString("user_id"));
                 String Email = rs.getString("email");
                 String Admin = rs.getString("admin");
-                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", userID, Email, Admin);
+                System.out.printf("FOUND ADMIN UserID = %s Email = %s Admin = %s", userIDAdmin, Email, Admin);
                 return true;
             }
             // CLOSE CONNECTION
             rs.close();
             stmt.close();
             conn.close();
+
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         System.out.println("Operation adminLogin done successfully");
         return false;
+    }
+
+    public ObservableList<Movie> getMovie() {
+        ObservableList<Movie> movies = FXCollections.observableArrayList();
+        String sql = "select * from movie";  // Set QUERY
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            // QUERY RESULTS
+            rs = stmt.executeQuery();                                                   // Set autocommit to false -> see JBDC docs
+
+            // FUNCTION
+            while (rs.next()) {
+                movies.add(new Movie(
+                        rs.getInt("movie_id"),
+                        rs.getString("title"),
+                        rs.getString("genre"),
+                        rs.getInt("duration"),
+                        rs.getInt("year"),
+                        rs.getString("writer"),
+                        rs.getString("director"),
+                        rs.getInt("rating"),
+                        rs.getInt("num_rating")
+                ));
+            }
+            // CLOSE CONNECTION
+            rs.close();
+            stmt.close();
+            conn.close();
+            return movies;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return movies;
     }
 
 }
